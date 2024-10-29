@@ -73,28 +73,99 @@ double GQ_integrate(const std::vector<double> &f, const std::vector<double> &wei
     return sum;
 }
 
+// ----------------------------------------------------------------------
+// Boundary Condition Functions -- ANALYTICAL
+// ** These can be changed to whatever function is needed
+// ----------------------------------------------------------------------
+double Gamma_L(double mu, double mu_star)
+
+{
+    if (mu == mu_star)
+    {
+        return 1.0 / (2 * M_PI * mu_star);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+double Gamma_R()
+{
+    return 0;
+}
+
+double BC_scaling(const std::vector<double> &mus, const std::vector<double> &weights, const std::vector<double> &gammas, string flag)
+// Function calculates the scaling factor for the boundary fluxes
+// Variable "flag" specifies whether the flux is on the right or left boundary; takes values of "R" and "L", respectively
+{
+
+    if (flag == "L")
+    {
+
+        int N = mus.size();
+        int n = mus.size() / 2;
+        double sum = 0;
+        std::vector<double> fs;
+        std::vector<double> new_weights;
+
+        for (int k = n; k < N; k++)
+        {
+            fs.push_back(mus[k] * gammas[k]);
+            new_weights.push_back(weights[k]);
+        }
+
+        double term = GQ_integrate(fs, new_weights);
+        return 2 * M_PI * term;
+    }
+    else if (flag == "R")
+    {
+        int N = mus.size();
+        int n = mus.size() / 2;
+        double sum = 0;
+        std::vector<double> fs;
+        std::vector<double> new_weights;
+
+        for (int k = n; k < N; k++)
+        {
+            fs.push_back(mus[k] * gammas[k]);
+            new_weights.push_back(weights[k]);
+        }
+
+        double term = GQ_integrate(fs, new_weights);
+        return 2 * M_PI * term;
+    }
+    else
+    {
+        printf("\nINVALID FLAG FOR SCALING FACTOR!!!\n");
+        return 0;
+    }
+}
+
+// ----------------------------------------------------------------------
+
 int main(int argc, char const *argv[])
 {
     printf("\n***************************************************\n");
     printf("                 SN1 CODE EXECUTION\n");
     printf("***************************************************\n\n");
     double Sig_s = 0.5, L = 5, Sig_t = 1.0, Sig_f = 0.0; // given material data
-    double tol = 1e-6;                                   // convergence tolerance
-    double dz;                                           // allocate memory for later
-    int n_cells[4] = {10, 20, 50, 100};                  // Define number of cells in space
-    double alpha = 0.5;                                  // specifies diamond differencing
-    int max_iters = 100;                                 // Safety measure
-    alglib::ae_int_t n_mu = 8;                           // Number of quadrature nodes in mu
-    std::vector<double> fmflux;
-    std::vector<double> bmflux;
+    double tol = 1e-6;                                    // convergence tolerance
+    double dz;                                            // allocate memory for later
+    int n_cells[4] = {10, 20, 50, 100};                   // Define number of cells in space
+    double alpha = 0.5;                                   // specifies diamond differencing
+    int max_iters = 100;                                  // Safety measure
+    alglib::ae_int_t n_mu = 8;                            // Number of quadrature nodes in mu
+    std::vector<double> fmflux;                           // allocate memory for storing cell fluxes -- "forward marching flux"
+    std::vector<double> bmflux;                           // allocate memory for storing cell fluxes -- "backward marching flux"
     string output_filename;
 
     printf("\nRun Specifications:\n"
-           "    Sigma_s: %.4f            Sigma_f: %.4f\n"
-           "    Sigma_t: %.4f            Length (L): %.1f\n"
-           "    Alpha: %.4f              Max Iterations: %d\n"
-           "    Error Tolerance: %e      Quadrature Nodes: %ld\n\n",
-           Sig_s, Sig_f, Sig_t, L, alpha, max_iters, tol, n_mu);
+           "    Sigma_s: %.4f               Sigma_f: %.4f\n"
+           "    Sigma_t: %.4f               Length (L): %.1f\n"
+           "    Alpha: %.4f                 Max Iterations: %d\n"
+           "    Quadrature Nodes: %ld           Error Tolerance: %.1e\n\n",
+           Sig_s, Sig_f, Sig_t, L, alpha, max_iters, n_mu, tol);
 
     // Variables to store the output
     alglib::ae_int_t info;          // To hold the status code
@@ -102,18 +173,20 @@ int main(int argc, char const *argv[])
     alglib::real_1d_array w;        // To store weights
     std::vector<double> w_vec;      // Store weights as vector
     double mus[n_mu] = {};          // Store discrete ordinates in array
+    std::vector<double> mu_vec;     // Store DO's in vector (for integration)
 
     // Call the Gauss-Legendre quadrature generator
     printf("Calculating GQ weights and discrete ordinates... ");
     alglib::gqgenerategausslegendre(n_mu, info, mus_init, w);
     printf("Done.\n"
-           "Casting GQ data to a vector (weights) and array (scattering angle)...");
+           "Casting GQ data to a vector (weights) and array/vector (scattering angle)...");
 
-    // Cast weights into a vector and mu's into an array
+    // Cast weights into a vector and mu's into an array and a vector
     for (int i = 0; i < n_mu; i++)
     {
         w_vec.push_back(w[i]);
         mus[i] = mus_init[i];
+        mu_vec.push_back(mus_init[i]);
     }
     printf("Done.\n"
            "Initializing variables and iterating over cell sizes...\n");
@@ -124,9 +197,42 @@ int main(int argc, char const *argv[])
     double fFlux, bFlux;                  // Corresponding to "front flux" and "back flux", respectively
     std::vector<double> angular_flux_col; // Vector to store column of angular flux values (corresponding to the same point in space)
 
-    // Define BCs
-    double gamma_L = 5000000;
-    double gamma_R = 0;
+    // ----------------------------------------------------------------------
+    // Define boundary conditions
+    // ----------------------------------------------------------------------
+
+    printf("\nAssigning boundary conditions...\n");
+    // Define analytical fluxes
+    std::vector<double> gammas_L, gammas_R;
+
+    double mu_star = mus[n_mu - 1]; // Choose the largest mu value just for this application
+    for (int k = 0; k < n_mu; k++)
+    {
+        gammas_L.push_back(Gamma_L(mus[k], mu_star));
+        gammas_R.push_back(Gamma_R());
+    }
+
+    printf("    Analytical fluxes set.\n"
+           "    Calculating scaling factor... ");
+
+    // Demand current to be 1
+    double BC_scaling_factor_left = BC_scaling(mu_vec, w_vec, gammas_L, "L"); // calculated LH scaling factor
+    printf("Done.\n"
+           "    LH Scaling factor = %.4f\n",
+           BC_scaling_factor_left);
+
+    // *** UNCOMMENT THIS FOR NONZERO RH BOUNDARY CONDITION ***
+    // double BC_scaling_factor_right = BC_scaling(mu_vec,w_vec,gammas_R,"R"); // calculate RH scaling factor
+
+    printf("    Scaling numerical flux values... ");
+    for (int k = 0; k < n_mu; k++)
+    {
+        gammas_L[k] *= (1 / BC_scaling_factor_left);
+
+        // *** UNCOMMENT THIS FOR NONZERO RH BOUNDARY CONDITION ***
+        // gammas_R[k] *= (1/BC_scaling_factor_right);
+    }
+    printf("Done.\n");
 
     // ----------------------------------------------------------------------
     // Begin looping over number of cells in spatial coordinates
@@ -144,7 +250,7 @@ int main(int argc, char const *argv[])
 
         // Create 2D arrays to hold the scalar flux at different mu and z values
         // mu is varied in rows, while z is varied by column
-        printf("    Initializing angular flux arrays...");
+        printf("    Initializing angular flux arrays... ");
         double psi_current[n_mu][I] = {};
         double psi_old[n_mu][I] = {};
         printf("Done.\n");
@@ -186,28 +292,50 @@ int main(int argc, char const *argv[])
 
                 if (mu_n > 0)
                 {
-                    bFlux = gamma_L;
+                    bmflux.clear();
+                    bmflux.push_back(gammas_L[i]);
                     for (int j = 0; j < I; j++)
                     {
                         // Forward sweep in z
+                        bFlux = bmflux.back();
                         front_coeff = 1 / (1 + Sig_t * dz / (2 * mu_n));
                         psi_current[i][j] = front_coeff * (bFlux + dz * q[j] / (2 * mu_n));
-                        bFlux = (1 / (1 - alpha)) * (psi_current[i][j] - alpha * bFlux);
+
+                        // This handles when the flux goes negative.
+                        // Take the incoming flux to be equal to the previous cell-center flux (alpha=0)
+                        if (psi_current[i][j] < 0)
+                        {
+                            bmflux.erase(std::find(bmflux.begin(), bmflux.end(), bFlux));       // Delete the final flux in bmflux, the value that made us go negative
+                            bFlux = psi_current[i][j - 1];                                      // reassign flux for alpha=0 only in this cell
+                            bmflux.push_back(bFlux);                                            // add in new flux value
+                            psi_current[i][j] = front_coeff * (bFlux + dz * q[j] / (2 * mu_n)); // recalculate cell-center flux
+                        }
+                        bmflux.push_back((1 / (1 - alpha)) * (psi_current[i][j] - alpha * bFlux)); // Append new flux value with alpha!=0
                     }
                 }
                 else if (mu_n < 0)
                 {
-                    fFlux = gamma_R;
-                    // printf("Beginning backward sweep...\n");
+                    fmflux.clear();
+                    fmflux.push_back(gammas_R[i]);
                     for (int j = I - 1; j > -1; j--)
                     {
                         // Back sweep in z
+                        fFlux = fmflux.back();
                         front_coeff = 1 / (1 + Sig_t * dz / (2 * abs(mu_n)));
-                        // printf("DEBUG: front_coeff = %f\n",front_coeff);
                         psi_current[i][j] = front_coeff * (fFlux + dz * q[j] / (2 * abs(mu_n)));
-                        fFlux = 1 / (1 - alpha) * (psi_current[i][j] / alpha * fFlux);
+
+                        // This handles when the flux goes negative.
+                        // Take the incoming flux to be equal to the previous cell-center flux (alpha=0)
+                        if (psi_current[i][j])
+                        {
+                            fmflux.erase(std::find(fmflux.begin(), fmflux.end(), fFlux));            // Delete the final flux in fmflux, the value that made us go negative
+                            fFlux = psi_current[i][j + 1];                                           // reassign flux for alpha=0 only in this cell
+                            fmflux.push_back(fFlux);                                                 // add in new flux value
+                            psi_current[i][j] = front_coeff * (fFlux + dz * q[j] / (2 * abs(mu_n))); // recalculate cell-center flux
+                        }
+
+                        fmflux.push_back(1 / (1 - alpha) * (psi_current[i][j] - alpha * fFlux)); // Append new flux value with alpha!=0
                     }
-                    // printf("Backward sweep completed.\n\n");
                 }
             }
 
@@ -263,7 +391,7 @@ int main(int argc, char const *argv[])
         // ----------------------------------------------------------------------
         // Create output files
         // ----------------------------------------------------------------------
-        
+
         // Values of the scalar flux will necessarily be reported at the cell CENTER
 
         printf("    Exporting scalar fluxes to CSV file...\n");
@@ -271,8 +399,6 @@ int main(int argc, char const *argv[])
         output_filename = to_string(I) + "_out.csv";
         std::ofstream outfile(output_filename);
 
-        outfile << "Left Boundary:," << gamma_L << "\n";
-        outfile << "Right Boundary:," << gamma_R << "\n";
         outfile << "Number of Cells:," << I << "\n";
         outfile << "Final Error:," << error << "\n\n";
 
