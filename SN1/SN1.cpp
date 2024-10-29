@@ -150,14 +150,14 @@ int main(int argc, char const *argv[])
     printf("                 SN1 CODE EXECUTION\n");
     printf("***************************************************\n\n");
     double Sig_s = 0.5, L = 5, Sig_t = 1.0, Sig_f = 0.0; // given material data
-    double tol = 1e-6;                                    // convergence tolerance
-    double dz;                                            // allocate memory for later
-    int n_cells[4] = {10, 20, 50, 100};                   // Define number of cells in space
-    double alpha = 0.5;                                   // specifies diamond differencing
-    int max_iters = 100;                                  // Safety measure
-    alglib::ae_int_t n_mu = 8;                            // Number of quadrature nodes in mu
-    std::vector<double> fmflux;                           // allocate memory for storing cell fluxes -- "forward marching flux"
-    std::vector<double> bmflux;                           // allocate memory for storing cell fluxes -- "backward marching flux"
+    double tol = 1e-6;                                   // convergence tolerance
+    double dz;                                           // allocate memory for later
+    int n_cells[4] = {10, 20, 50, 100};                  // Define number of cells in space
+    double alpha = 0.5;                                  // specifies diamond differencing
+    int max_iters = 100;                                 // Safety measure
+    alglib::ae_int_t n_mu = 8;                           // Number of quadrature nodes in mu
+    std::vector<double> fmflux;                          // allocate memory for storing cell fluxes -- "forward marching flux"
+    std::vector<double> bmflux;                          // allocate memory for storing cell fluxes -- "backward marching flux"
     string output_filename;
 
     printf("\nRun Specifications:\n"
@@ -326,7 +326,7 @@ int main(int argc, char const *argv[])
 
                         // This handles when the flux goes negative.
                         // Take the incoming flux to be equal to the previous cell-center flux (alpha=0)
-                        if (psi_current[i][j])
+                        if (psi_current[i][j] < 0)
                         {
                             fmflux.erase(std::find(fmflux.begin(), fmflux.end(), fFlux));            // Delete the final flux in fmflux, the value that made us go negative
                             fFlux = psi_current[i][j + 1];                                           // reassign flux for alpha=0 only in this cell
