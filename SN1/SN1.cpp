@@ -1,6 +1,5 @@
 // To run code:
 // g++ -I./src SN1.cpp ./src/*.cpp -o SN1 && ./SN1
-// Need to find a way to make VSCode do this...
 
 // This may (or may not) be faster:
 // g++ -I./src SN1.cpp ./src/*.cpp -o SN1 -DAE_CPU=AE_INTEL -mavx2 -mfma -DAE_OS=AE_POSIX -pthread && ./SN1
@@ -142,6 +141,18 @@ double BC_scaling(const std::vector<double> &mus, const std::vector<double> &wei
     }
 }
 
+double Q_mms(double sigt, double mu, double z)
+// function returns the value of the source term evaluated at a particular
+// location (z) and angle (mu) for the manufacture solution
+{
+    double mus = 5.0 * pow(mu, 3.0) - 3.0 * mu;
+    double z1 = 0.8 - 8.0 / 25.0 * z;
+    double z2 = -4.0 / 25.0 * pow(z, 2.0) + 0.8 * z;
+
+    double Qm = 0.5 * mus * (mu * z1 + sigt * z2);
+    return Qm;
+}
+
 // ----------------------------------------------------------------------
 
 int main(int argc, char const *argv[])
@@ -149,7 +160,7 @@ int main(int argc, char const *argv[])
     printf("\n***************************************************\n");
     printf("                 SN1 CODE EXECUTION\n");
     printf("***************************************************\n\n");
-    double Sig_s = 0.5, L = 5, Sig_t = 1.0, Sig_f = 0.0; // given material data
+    double Sig_s = 0.5, L = 1, Sig_t = 1.0, Sig_f = 0.0; // given material data
     double tol = 1e-6;                                   // convergence tolerance
     double dz;                                           // allocate memory for later
     int n_cells[4] = {10, 20, 50, 100};                  // Define number of cells in space
@@ -159,6 +170,8 @@ int main(int argc, char const *argv[])
     std::vector<double> fmflux;                          // allocate memory for storing cell fluxes -- "forward marching flux"
     std::vector<double> bmflux;                          // allocate memory for storing cell fluxes -- "backward marching flux"
     string output_filename;
+
+    bool zero_dirichlet_bool = false;
 
     printf("\nRun Specifications:\n"
            "    Sigma_s: %.4f               Sigma_f: %.4f\n"
@@ -212,27 +225,42 @@ int main(int argc, char const *argv[])
         gammas_R.push_back(Gamma_R());
     }
 
-    printf("    Analytical fluxes set.\n"
-           "    Calculating scaling factor... ");
+    printf("    Analytical fluxes set.\n");
 
-    // Demand current to be 1
-    double BC_scaling_factor_left = BC_scaling(mu_vec, w_vec, gammas_L, "L"); // calculated LH scaling factor
-    printf("Done.\n"
-           "    LH Scaling factor = %.4f\n",
-           BC_scaling_factor_left);
-
-    // *** UNCOMMENT THIS FOR NONZERO RH BOUNDARY CONDITION ***
-    // double BC_scaling_factor_right = BC_scaling(mu_vec,w_vec,gammas_R,"R"); // calculate RH scaling factor
-
-    printf("    Scaling numerical flux values... ");
-    for (int k = 0; k < n_mu; k++)
+    if (zero_dirichlet_bool)
     {
-        gammas_L[k] *= (1 / BC_scaling_factor_left);
+        printf("    Homogeneous Dirichlet conditions specified. Scaling factor calculation ignored.\n"
+               "    Assigning zero fluxes on boundary... ");
+        
+        for (int k = 0; k < n_mu; k++)
+        {
+            gammas_L[k] = 0;
+            gammas_R[k] = 0;
+        }
+        printf("Done.\n");
+    }
+    else
+    {
+        printf("    Calculating scaling factor... ");
+                // Demand current to be 1
+        double BC_scaling_factor_left = BC_scaling(mu_vec, w_vec, gammas_L, "L"); // calculated LH scaling factor
+        printf("Done.\n"
+            "    LH Scaling factor = %.4f\n",
+            BC_scaling_factor_left);
 
         // *** UNCOMMENT THIS FOR NONZERO RH BOUNDARY CONDITION ***
-        // gammas_R[k] *= (1/BC_scaling_factor_right);
+        // double BC_scaling_factor_right = BC_scaling(mu_vec,w_vec,gammas_R,"R"); // calculate RH scaling factor
+
+        printf("    Scaling numerical flux values... ");
+        for (int k = 0; k < n_mu; k++)
+        {
+            gammas_L[k] *= (1 / BC_scaling_factor_left);
+
+            // *** UNCOMMENT THIS FOR NONZERO RH BOUNDARY CONDITION ***
+            // gammas_R[k] *= (1/BC_scaling_factor_right);
+        }
+        printf("Done.\n");
     }
-    printf("Done.\n");
 
     // ----------------------------------------------------------------------
     // Begin looping over number of cells in spatial coordinates
