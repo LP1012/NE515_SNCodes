@@ -160,7 +160,7 @@ int main(int argc, char const *argv[])
     printf("\n***************************************************\n");
     printf("                 SN1 CODE EXECUTION\n");
     printf("***************************************************\n\n");
-    double Sig_s = 0.5, L = 1, Sig_t = 1.0, Sig_f = 0.0; // given material data
+    double Sig_s = 0.5, L = 5, Sig_t = 1.0, Sig_f = 0.0; // given material data
     double tol = 1e-6;                                   // convergence tolerance
     double dz;                                           // allocate memory for later
     int n_cells[4] = {10, 20, 50, 100};                  // Define number of cells in space
@@ -231,7 +231,7 @@ int main(int argc, char const *argv[])
     {
         printf("    Homogeneous Dirichlet conditions specified. Scaling factor calculation ignored.\n"
                "    Assigning zero fluxes on boundary... ");
-        
+
         for (int k = 0; k < n_mu; k++)
         {
             gammas_L[k] = 0;
@@ -242,11 +242,11 @@ int main(int argc, char const *argv[])
     else
     {
         printf("    Calculating scaling factor... ");
-                // Demand current to be 1
+        // Demand current to be 1
         double BC_scaling_factor_left = BC_scaling(mu_vec, w_vec, gammas_L, "L"); // calculated LH scaling factor
         printf("Done.\n"
-            "    LH Scaling factor = %.4f\n",
-            BC_scaling_factor_left);
+               "    LH Scaling factor = %.4f\n",
+               BC_scaling_factor_left);
 
         // *** UNCOMMENT THIS FOR NONZERO RH BOUNDARY CONDITION ***
         // double BC_scaling_factor_right = BC_scaling(mu_vec,w_vec,gammas_R,"R"); // calculate RH scaling factor
@@ -287,13 +287,29 @@ int main(int argc, char const *argv[])
         // When compared to the notes, this will be q^(n-1), and code will simply make a direct update
         // instead of creating a new vector.
         printf("    Intializing scattering source terms... ");
-        double q[I] = {};
-        double S[I] = {}; // Initialize a source vector as well
+        // Because of angular dependence, both must be 2D arrays.
+        // Same structure as the angular flux (psi) values
+        double q[n_mu][I] = {};
+        double S[n_mu][I] = {};
 
-        for (int i = 0; i < I; i++)
+        double z_current, z_next; // variables to be used in quadrature
+        for (int i = 0; i < n_mu; i++)
+        // loop over angles
         {
-            q[i] = 0; // Initialize with all 0's
-            S[i] = 0; // CHANGE IF NEEDED FOR FUTURE APPLICATIONS
+            mu_n = mus[i];
+            for (int j = 0; j < I; j++)
+            // loop over cells
+            {
+                // implement a trapezoid quadrature rule for cell-averaged source
+                z_current = (double)j * dz;
+                z_next = double(j + 1) * dz;
+
+                // The following implements a quadrature rule for a source term.
+                // Since this code was not intended to solve for a source other than zero,
+                // the structure is left as a placeholder.
+                S[i][j] = 1 / 2.0 * (0 + 0); // delta_z cancels for volume-average
+                q[i][j] = S[i][j];           // for the first iteration, we assume a 0 scalar flux everywhere
+            }
         }
         printf("Done.\n");
 
@@ -327,16 +343,16 @@ int main(int argc, char const *argv[])
                         // Forward sweep in z
                         bFlux = bmflux.back();
                         front_coeff = 1 / (1 + Sig_t * dz / (2 * mu_n));
-                        psi_current[i][j] = front_coeff * (bFlux + dz * q[j] / (2 * mu_n));
+                        psi_current[i][j] = front_coeff * (bFlux + dz * q[i][j] / (2 * mu_n));
 
                         // This handles when the flux goes negative.
                         // Take the incoming flux to be equal to the previous cell-center flux (alpha=0)
                         if (psi_current[i][j] < 0)
                         {
-                            bmflux.erase(std::find(bmflux.begin(), bmflux.end(), bFlux));       // Delete the final flux in bmflux, the value that made us go negative
-                            bFlux = psi_current[i][j - 1];                                      // reassign flux for alpha=0 only in this cell
-                            bmflux.push_back(bFlux);                                            // add in new flux value
-                            psi_current[i][j] = front_coeff * (bFlux + dz * q[j] / (2 * mu_n)); // recalculate cell-center flux
+                            bmflux.erase(std::find(bmflux.begin(), bmflux.end(), bFlux));          // Delete the final flux in bmflux, the value that made us go negative
+                            bFlux = psi_current[i][j - 1];                                         // reassign flux for alpha=0 only in this cell
+                            bmflux.push_back(bFlux);                                               // add in new flux value
+                            psi_current[i][j] = front_coeff * (bFlux + dz * q[i][j] / (2 * mu_n)); // recalculate cell-center flux
                         }
                         bmflux.push_back((1 / (1 - alpha)) * (psi_current[i][j] - alpha * bFlux)); // Append new flux value with alpha!=0
                     }
@@ -350,16 +366,16 @@ int main(int argc, char const *argv[])
                         // Back sweep in z
                         fFlux = fmflux.back();
                         front_coeff = 1 / (1 + Sig_t * dz / (2 * abs(mu_n)));
-                        psi_current[i][j] = front_coeff * (fFlux + dz * q[j] / (2 * abs(mu_n)));
+                        psi_current[i][j] = front_coeff * (fFlux + dz * q[i][j] / (2 * abs(mu_n)));
 
                         // This handles when the flux goes negative.
                         // Take the incoming flux to be equal to the previous cell-center flux (alpha=0)
                         if (psi_current[i][j] < 0)
                         {
-                            fmflux.erase(std::find(fmflux.begin(), fmflux.end(), fFlux));            // Delete the final flux in fmflux, the value that made us go negative
-                            fFlux = psi_current[i][j + 1];                                           // reassign flux for alpha=0 only in this cell
-                            fmflux.push_back(fFlux);                                                 // add in new flux value
-                            psi_current[i][j] = front_coeff * (fFlux + dz * q[j] / (2 * abs(mu_n))); // recalculate cell-center flux
+                            fmflux.erase(std::find(fmflux.begin(), fmflux.end(), fFlux));               // Delete the final flux in fmflux, the value that made us go negative
+                            fFlux = psi_current[i][j + 1];                                              // reassign flux for alpha=0 only in this cell
+                            fmflux.push_back(fFlux);                                                    // add in new flux value
+                            psi_current[i][j] = front_coeff * (fFlux + dz * q[i][j] / (2 * abs(mu_n))); // recalculate cell-center flux
                         }
 
                         fmflux.push_back(1 / (1 - alpha) * (psi_current[i][j] - alpha * fFlux)); // Append new flux value with alpha!=0
@@ -374,9 +390,13 @@ int main(int argc, char const *argv[])
                 {
                     angular_flux_col.push_back(psi_current[k][m]); // This will loop over a particular column in psi_current to get a vector
                 }
-                scalar_flux_current.push_back(GQ_integrate(angular_flux_col, w_vec));   // Calculate value of scalar flux at given z-value
-                q[m] = Sig_s / (4 * M_PI) * scalar_flux_current[m] + S[m] / (4 / M_PI); // Update scatter source
-                angular_flux_col.clear();                                               // Clear angular flux vector
+                scalar_flux_current.push_back(GQ_integrate(angular_flux_col, w_vec) * 2 * M_PI); // Calculate value of scalar flux at given z-value
+
+                for (int k = 0; k < n_mu; k++) // loop over angles to update scatter source
+                {
+                    q[k][m] = Sig_s / (4 * M_PI) * scalar_flux_current[m] + S[k][m]; // Update scatter source --> scalar flux is true over all angles
+                }
+                angular_flux_col.clear(); // Clear angular flux vector                                            // Clear angular flux vector
             }
 
             // ----------------------------------------------------------------------

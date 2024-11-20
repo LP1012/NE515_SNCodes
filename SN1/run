@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+g++ -I./src SN1.cpp ./src/*.cpp -o SN1 && ./SN1
+python3 make_plots.py
