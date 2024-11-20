@@ -10,3 +10,5 @@ To test the libraries, run the following command: `g++ -I./src test_c.cpp ./src/
 The compile the code, use the following command: `g++ -I./src SN1_mms.cpp ./src/*.cpp -o SN1_mms`. 
 To run the code from the SN1 directory, simply run `./SN1` in a terminal.
 This all assumes that `g++` compiler is up to date.
+For a streamlined run, use the `run` bash executable provided.
+It will compile and run the `SN1_mms script`, and it will plot the results.
