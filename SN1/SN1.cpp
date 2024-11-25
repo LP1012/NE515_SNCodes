@@ -44,8 +44,9 @@ double backward_flux(double alpha, double phi_n, double rh_flux)
     return 1 / (1 - alpha) * (phi_n - alpha * rh_flux);
 }
 
-double calc_error(const std::vector<double> &current_flux, const std::vector<double> &previous_flux)
-// Function determines the current error by calculating the relative error between scalar flux vectors using the 2-norm
+double calc_error(const std::vector<double> current_flux, const std::vector<double> previous_flux, double dz)
+// Function determines the current error by calculating the relative error between scalar flux vectors using the discrete L2 norm
+// Numerical integration is implemented using the midpoint rule
 {
     double cfsum = 0, pfsum = 0;
     for (int k = 0; k < current_flux.size(); k++)
@@ -53,8 +54,8 @@ double calc_error(const std::vector<double> &current_flux, const std::vector<dou
         cfsum += current_flux[k] * current_flux[k];
         pfsum += previous_flux[k] * previous_flux[k];
     }
-    double cfnorm = sqrt(cfsum);
-    double pfnorm = sqrt(pfsum);
+    double cfnorm = sqrt(dz * cfsum);
+    double pfnorm = sqrt(dz * pfsum);
 
     double error = std::abs(cfnorm - pfnorm) / pfnorm;
 
@@ -404,7 +405,7 @@ int main(int argc, char const *argv[])
             // ----------------------------------------------------------------------
             if (iteration_num > 0)
             {
-                error = calc_error(scalar_flux_current, scalar_flux_old);
+                error = calc_error(scalar_flux_current, scalar_flux_old, dz);
                 printf("        Iteration %d: Error = %e\n",
                        iteration_num, error);
             }
