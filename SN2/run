@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Run free surface cases
+./SN2_freeSurfaces <<< freeSurface1_alpha0_input
+./SN2_freeSurfaces <<< freeSurface1_diamond_input
+./SN2_freeSurfaces <<< freeSurface2_alpha0_input
+./SN2_freeSurfaces <<< freeSurface2_diamond_input
+
+# Run Reed problem
+./SN2_reed <<< reed_input
+
+# Create plots
+python3 make_plotsSN2.py

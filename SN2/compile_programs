@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+g++ -I./src SN2_freeSurfaces.cpp ./src/*.cpp -o SN2_freeSurfaces
+g++ -I./src SN2_reed.cpp ./src/*.cpp -o SN2_reed

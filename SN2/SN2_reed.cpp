@@ -43,23 +43,6 @@ double backward_flux(double alpha, double phi_n, double rh_flux)
     return 1 / (1 - alpha) * (phi_n - alpha * rh_flux);
 }
 
-// double calc_error(const std::vector<double> current_flux, const std::vector<double> previous_flux)
-// // Function determines the current error by calculating the relative error between scalar flux vectors using the 2-norm
-// {
-//     double cfsum = 0, pfsum = 0;
-//     for (int k = 0; k < current_flux.size(); k++)
-//     {
-//         cfsum += current_flux[k] * current_flux[k];
-//         pfsum += previous_flux[k] * previous_flux[k];
-//     }
-//     double cfnorm = sqrt(cfsum);
-//     double pfnorm = sqrt(pfsum);
-
-//     double error = std::abs(cfnorm - pfnorm) / pfnorm;
-
-//     return error;
-// }
-
 double GQ_integrate(const std::vector<double> &f, const std::vector<double> &weights)
 // Function evaluates the Gaussian quadrature using the function values and weights
 {
@@ -93,7 +76,7 @@ double Gamma_R()
     return 0;
 }
 
-double BC_scaling(const std::vector<double> &mus, const std::vector<double> &weights, const std::vector<double> &gammas, string flag)
+double BC_scaling(const std::vector<double> mus, const std::vector<double> weights, const std::vector<double> gammas, string flag)
 // Function calculates the scaling factor for the boundary fluxes
 // Variable "flag" specifies whether the flux is on the right or left boundary; takes values of "R" and "L", respectively
 {
@@ -173,9 +156,9 @@ int find_region_index(int n, std::vector<int> num_cells)
 
 int main(int argc, char const *argv[])
 {
-    printf("\n***************************************************\n");
-    printf("                 SN1 CODE EXECUTION\n");
-    printf("***************************************************\n\n");
+    printf("\n************************************************************\n");
+    printf("                 SN2 Reed Problem CODE EXECUTION\n");
+    printf("************************************************************\n\n");
     std::vector<double> fmflux;      // allocate memory for storing cell fluxes -- "forward marching flux"
     std::vector<double> bmflux;      // allocate memory for storing cell fluxes -- "backward marching flux"
     int region_index;                // hold index number of current iteration -- to be used later
@@ -184,7 +167,8 @@ int main(int argc, char const *argv[])
     std::vector<double> error_vec;
     string output_filename;
 
-    bool zero_dirichlet_bool = false;  // this is a legacy flag, used for specifying vacuum boundary conditions on both ends of the slab
+    bool zero_dirichlet_bool = false; // this is a legacy flag, used for specifying vacuum boundary conditions on both ends of the slab
+    bool albedo_bool = true;          // flag tells the code to implement an albedo boundary condtion
 
     // BEGIN INPUT TEXT FILE ---------------------------------------------------------------------------------------
 
@@ -196,9 +180,9 @@ int main(int argc, char const *argv[])
     ifstream infile;
 
     int n_regions = 0;
+    double albedo;
     double tol = 0, alpha, max_iters;
-    // alglib::ae_int_t n_mu;
-    int n_mu; // temporary
+    int n_mu;
     // define vectors for dynamic memory allocation
     std::vector<double> Lengths;
     std::vector<int> n_cells;
@@ -210,7 +194,10 @@ int main(int argc, char const *argv[])
     string infile_name;
     cin >> infile_name;
 
-    infile.open(infile_name);
+    string infile_with_extension;
+    infile_with_extension = infile_name + ".txt";
+
+    infile.open(infile_with_extension);
 
     // attempt to open input file
     if (infile.is_open())
@@ -283,6 +270,10 @@ int main(int argc, char const *argv[])
                 {
                     sources.push_back(stod(token));
                 }
+                else if (div_val == 5)
+                {
+                    albedo = stod(token);
+                }
 
                 i += 1;
             }
@@ -298,7 +289,8 @@ int main(int argc, char const *argv[])
 
     // Check for successful parsing
     cout << "Run settings: " << endl;
-    cout << "Number of regions = " << n_regions << endl;
+    cout << "Number of regions  = " << n_regions << endl;
+    cout << "Albedo Coefficient = " << albedo << endl;
     for (int j = 0; j < n_regions; j++)
     {
         cout << "	Region " << j + 1 << ": " << endl
@@ -332,12 +324,13 @@ int main(int argc, char const *argv[])
     // ----------------------------------------------------------------------
 
     // Variables to store the output
-    alglib::ae_int_t info;          // To hold the status code
-    alglib::real_1d_array mus_init; // To store nodes
-    alglib::real_1d_array w;        // To store weights
-    std::vector<double> w_vec;      // Store weights as vector
-    double mus[n_mu] = {};          // Store discrete ordinates in array
-    std::vector<double> mu_vec;     // Store DO's in vector (for integration)
+    alglib::ae_int_t info;                  // To hold the status code
+    alglib::real_1d_array mus_init;         // To store nodes
+    alglib::real_1d_array w;                // To store weights
+    std::vector<double> w_vec;              // Store weights as vector
+    double mus[n_mu] = {};                  // Store discrete ordinates in array
+    std::vector<double> mu_vec;             // Store DO's in vector (for integration)
+    std::vector<double> LH_boundary_fluxes; // store LW side fluxes for albedo condition
 
     // Call the Gauss-Legendre quadrature generator
     printf("Calculating GQ weights and discrete ordinates... ");
@@ -390,6 +383,20 @@ int main(int argc, char const *argv[])
         }
         printf("Done.\n");
     }
+    else if (albedo_bool)
+    {
+
+        printf("    LH albedo boundary condition specified. Scaling factor ignored.\n"
+               "   Assigning zero fluxes on boundary for first iteration... ");
+        for (int k = 0; k < n_mu; k++)
+        {
+            gammas_L[k] = 0;
+            gammas_R[k] = 0;
+            LH_boundary_fluxes.push_back(0);
+        }
+        printf("Done.\n");
+    }
+
     else
     {
         printf("    Calculating scaling factor... ");
@@ -482,7 +489,17 @@ int main(int argc, char const *argv[])
             if (mu_n > 0)
             {
                 bmflux.clear();
-                bmflux.push_back(gammas_L[i]);
+                if (albedo_bool)
+                {
+                    LH_boundary_fluxes[i] = albedo * LH_boundary_fluxes[n_mu - i + 2];
+                    bmflux.push_back(albedo * LH_boundary_fluxes[n_mu - i + 2]); // pull the correct albedo flux
+                    // cout << "DEBUG: albedo flux for i =" << i << ": " << bmflux.back() << endl;
+                }
+                else
+                {
+                    bmflux.push_back(gammas_L[i]); // legacy code
+                }
+
                 for (int j = 0; j < tot_n_cells; j++)
                 {
                     region_index = find_region_index(j, n_cells); // determines the spatial region we are in
@@ -530,9 +547,24 @@ int main(int argc, char const *argv[])
                     }
 
                     fmflux.push_back(1 / (1 - alpha) * (psi_current[i][j] - alpha * fFlux)); // Append new flux value with alpha!=0
+                    if (j == 0)
+                    {
+                        LH_boundary_fluxes[i] = fmflux.back(); // update outgoing flux
+                        // cout << "DEBUG: Updated flux for LHS: mu_i = " << mu_n << ", new flux = " << LH_boundary_fluxes[i] << endl;
+                    }
                 }
             }
         }
+        // // rescale LH boundary now that there is not just 0 values
+        // if (iteration_num > 2)
+        // {
+        //     double BC_scaling_factor_left = BC_scaling(mu_vec, w_vec, LH_boundary_fluxes, "L");
+        //     for (int k = 0; k < LH_boundary_fluxes.size(); k++)
+        //     {
+        //         LH_boundary_fluxes[k] *= (1 / BC_scaling_factor_left);
+        //         cout << "DEBUG: BC Scaling Factor = " << BC_scaling_factor_left<<endl;
+        //     }
+        // }
 
         // Create vectors from the columns of the angular fluxes to integrate
         for (int m = 0; m < tot_n_cells; m++)
@@ -557,8 +589,6 @@ int main(int argc, char const *argv[])
         // ----------------------------------------------------------------------
         if (iteration_num > 0)
         {
-            // error = calc_error(scalar_flux_current, scalar_flux_old);
-
             // reset values
             error_vec.clear();
             running_error = 0;
@@ -610,7 +640,7 @@ int main(int argc, char const *argv[])
 
     printf("    Exporting scalar fluxes to CSV file...\n");
 
-    output_filename = infile_name + "_out.csv";
+    output_filename = "reed_out.csv";
     std::ofstream outfile(output_filename);
 
     outfile << "Number of Cells:," << tot_n_cells << "\n";
@@ -629,6 +659,6 @@ int main(int argc, char const *argv[])
     outfile.close();
     printf("    CSV export completed: %s\n\n", output_filename.c_str());
 
-    printf("\nSN2 Code Completed Successfully.\n\n\n");
+    printf("\nSN2 Reed Problem Code Completed Successfully.\n\n\n");
     return 0;
 }

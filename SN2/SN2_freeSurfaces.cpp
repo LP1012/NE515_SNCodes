@@ -156,9 +156,9 @@ int find_region_index(int n, std::vector<int> num_cells)
 
 int main(int argc, char const *argv[])
 {
-    printf("\n***************************************************\n");
-    printf("                 SN1 CODE EXECUTION\n");
-    printf("***************************************************\n\n");
+    printf("\n****************************************************************\n");
+    printf("                 SN2 Free Surface CODE EXECUTION\n");
+    printf("****************************************************************\n\n");
     std::vector<double> fmflux;      // allocate memory for storing cell fluxes -- "forward marching flux"
     std::vector<double> bmflux;      // allocate memory for storing cell fluxes -- "backward marching flux"
     int region_index;                // hold index number of current iteration -- to be used later
@@ -171,10 +171,10 @@ int main(int argc, char const *argv[])
 
     // BEGIN INPUT TEXT FILE ---------------------------------------------------------------------------------------
 
-    printf("Input data filename: ");
+    printf("Input data filename (no extension): ");
     cout<<endl;
 
-    printf("Importing data from text file: ");
+    
 
     ifstream infile;
 
@@ -193,7 +193,12 @@ int main(int argc, char const *argv[])
     string infile_name;
     cin >> infile_name;
 
-    infile.open(infile_name);
+    string infile_with_extension;
+    infile_with_extension = infile_name + ".txt";
+
+    infile.open(infile_with_extension);
+
+    printf("Importing data from text file: ");
 
     // attempt to open input file
     if (infile.is_open())
