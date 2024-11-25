@@ -184,11 +184,14 @@ int main(int argc, char const *argv[])
     std::vector<double> error_vec;
     string output_filename;
 
-    bool zero_dirichlet_bool = false;
+    bool zero_dirichlet_bool = false;  // this is a legacy flag, used for specifying vacuum boundary conditions on both ends of the slab
 
     // BEGIN INPUT TEXT FILE ---------------------------------------------------------------------------------------
 
-    printf("Importing data from text file... ");
+    printf("Input data filename: ");
+    cout << endl;
+
+    printf("Importing data from text file: ");
 
     ifstream infile;
 
@@ -204,7 +207,10 @@ int main(int argc, char const *argv[])
     std::vector<double> sources; // store sources
     int div_val;
 
-    infile.open("input_file.txt");
+    string infile_name;
+    cin >> infile_name;
+
+    infile.open(infile_name);
 
     // attempt to open input file
     if (infile.is_open())
@@ -374,7 +380,7 @@ int main(int argc, char const *argv[])
 
     if (zero_dirichlet_bool)
     {
-        printf("    Homogeneous Dirichlet conditions specified. Scaling factor calculation ignored.\n"
+        printf("    Vacuum boundary conditions specified. Scaling factor calculation ignored.\n"
                "    Assigning zero fluxes on boundary... ");
 
         for (int k = 0; k < n_mu; k++)
@@ -568,9 +574,6 @@ int main(int argc, char const *argv[])
             error = sqrt(running_error);
             printf("        Iteration %d: Error = %e\n",
                    iteration_num, error);
-
-            // cout << "I got here :-)" << endl;
-            // return 0;
         }
         iteration_num += 1;
         if (iteration_num == max_iters)
@@ -607,7 +610,7 @@ int main(int argc, char const *argv[])
 
     printf("    Exporting scalar fluxes to CSV file...\n");
 
-    output_filename = "reedProblem_out.csv";
+    output_filename = infile_name + "_out.csv";
     std::ofstream outfile(output_filename);
 
     outfile << "Number of Cells:," << tot_n_cells << "\n";
@@ -615,13 +618,13 @@ int main(int argc, char const *argv[])
 
     outfile << "z,Flux\n";
 
-    double z_sum = dzs[0]/2.0;
+    double z_sum = dzs[0] / 2.0;
     for (int j = 0; j < tot_n_cells; j++)
     {
         region_index = find_region_index(j, n_cells); // determines the spatial region we are in
         dz = dzs[region_index];
-        outfile << z_sum<< "," << scalar_flux_old[j] << "\n";
-        z_sum+=dz;
+        outfile << z_sum << "," << scalar_flux_old[j] << "\n";
+        z_sum += dz;
     }
     outfile.close();
     printf("    CSV export completed: %s\n\n", output_filename.c_str());
