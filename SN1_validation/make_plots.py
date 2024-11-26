@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import glob
 import seaborn as sns
+import numpy as np
 
 sns.set_theme(
     context="paper",
@@ -27,16 +28,35 @@ plt.title("MMS Convergence Plot")
 plt.savefig("MMS_plot.png",dpi=300)
 plt.close()
 
+# New dataframe for L2 errors
+
 data_errors = pd.read_csv("MMS_L2errors.csv",skiprows=2)
+
+# Create reference curve
+x_refs = data_errors.iloc[:,0].to_numpy()
+xs = np.array([1/x for x in x_refs])
+
+y_quads = np.array([x**2 for x in xs])
+y_linears = xs
+
+# Create dz values
+ys = data_errors.iloc[:,1].to_numpy()
+
+
 plt.figure()
-sns.lineplot(x=data_errors.iloc[:,0],y=data_errors.iloc[:,1], marker="o",markersize=8,linewidth=2)
-plt.xlabel("Number of Cells")
-plt.title("L2 Error of MMS Solution")
+sns.lineplot(x=xs,y=ys, marker="o",markersize=8,linewidth=2,label='Experimental Error')
+sns.lineplot(x=xs, y=y_quads, linewidth=2,label=r"Reference Curve $y=x^2$",linestyle="dashed")
+sns.lineplot(x=xs, y=y_linears,label=r"Reference Curve $y=x$",linewidth=2,linestyle='dashed')
+plt.legend()
+plt.xlabel(r"$\Delta z$")
+plt.ylabel("L2-norm of Error")
+plt.title("L2-norm of Error of MMS Solution Against Reference Curve")
 plt.yscale("log")
 plt.xscale("log")
 plt.grid(True,which="both")
 plt.savefig("L2error_plot.png",dpi=300)
 plt.close()
 
+print(" ")
 print("Plots exported.")
 print(" ")
