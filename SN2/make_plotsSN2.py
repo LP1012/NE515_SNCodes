@@ -28,3 +28,5 @@ for file in glob.glob("*.csv"):
 
 print("")
 print("Plots exported.")
+print("")
+print("")

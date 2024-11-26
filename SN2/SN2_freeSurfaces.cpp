@@ -167,27 +167,24 @@ int main(int argc, char const *argv[])
     std::vector<double> error_vec;
     string output_filename;
 
-    bool zero_dirichlet_bool = true;  // as the name of the program suggests, this flag specifies zero boundary conditions on slab ends
+    bool zero_dirichlet_bool = true; // as the name of the program suggests, this flag specifies zero boundary conditions on slab ends
 
     // BEGIN INPUT TEXT FILE ---------------------------------------------------------------------------------------
 
     printf("Input data filename (no extension): ");
-    cout<<endl;
-
-    
+    cout << endl;
 
     ifstream infile;
 
     int n_regions = 0;
     double tol = 0, alpha, max_iters;
-    alglib::ae_int_t n_mu;
-    // int n_mu; // temporary
+    // alglib::ae_int_t n_mu;
+    int n_mu; // temporary
     // define vectors for dynamic memory allocation
     std::vector<double> Lengths;
     std::vector<int> n_cells;
     std::vector<double> Sig_ts;
     std::vector<double> Sig_ss;
-    std::vector<double> sources; // store sources
     int div_val;
 
     string infile_name;
@@ -267,10 +264,6 @@ int main(int argc, char const *argv[])
                 {
                     Sig_ss.push_back(stod(token));
                 }
-                else if (div_val == 4)
-                {
-                    sources.push_back(stod(token));
-                }
 
                 i += 1;
             }
@@ -293,8 +286,7 @@ int main(int argc, char const *argv[])
              << "		Length = " << Lengths[j] << endl
              << "		Cells  = " << n_cells[j] << endl
              << "		Sig_t  = " << Sig_ts[j] << endl
-             << "		Sig_s  = " << Sig_ss[j] << endl
-             << "		Source = " << sources[j] << endl;
+             << "		Sig_s  = " << Sig_ss[j] << endl;
     }
     printf("\nData import complete.\n");
 
@@ -422,29 +414,26 @@ int main(int argc, char const *argv[])
     printf("    Intializing scattering source terms... ");
     // Because of angular dependence, both must be 2D arrays.
     // Same structure as the angular flux (psi) values
-    double q[n_mu][tot_n_cells] = {};
-    double S[n_mu][tot_n_cells] = {};
+    double q[n_mu] = {};
+    double S[n_mu] = {};
 
     for (int i = 0; i < n_mu; i++)
     // loop over angles
     {
         mu_n = mus[i];
-        for (int j = 0; j < tot_n_cells; j++)
-        // loop over cells
-        {
-
-            region_index = find_region_index(j, n_cells); // determines the spatial region we are in
-
-            dz = dzs[region_index]; // pulls correct dz value
-
-            // The following implements a quadrature rule for a source term.
-            // Since this code was not intended to solve for a source other than zero,
-            // the structure is left as a placeholder.
-            S[i][j] = sources[region_index]; // pull the source value based on the region (assumes constant source in a region)
-            q[i][j] = S[i][j];               // for the first iteration, we assume a 0 scalar flux everywhere
-        }
+        S[i] = 1 / (2.0 * M_PI * w_vec[i] * (double)n_mu); // pull the source value based on the region (assumes constant source in a region)
+        q[i] = 0;                                          // for the first iteration, we assume a 0 scalar flux everywhere
     }
     printf("Done.\n");
+
+    // check source
+    double s_sum = 0;
+    for (int i = 0; i < n_mu; i++)
+    {
+        s_sum += 2 * M_PI * w_vec[i] * S[i];
+    }
+    cout << "    Source normalization check: Source integral = " << s_sum <<endl;
+    
 
     printf("    Initialize computational error... ");
     double error = 1; // Dummy value to start with
@@ -479,7 +468,7 @@ int main(int argc, char const *argv[])
                     // Forward sweep in z
                     bFlux = bmflux.back();
                     front_coeff = 1 / (1 + Sig_t * dz / (2 * mu_n));
-                    psi_current[i][j] = front_coeff * (bFlux + dz * q[i][j] / (2 * mu_n));
+                    psi_current[i][j] = front_coeff * (bFlux + dz * q[i] / (2 * mu_n));
 
                     // This handles when the flux goes negative.
                     // Take the incoming flux to be equal to the previous cell-center flux (alpha=0)
@@ -488,7 +477,7 @@ int main(int argc, char const *argv[])
                         bmflux.erase(std::find(bmflux.begin(), bmflux.end(), bFlux));          // Delete the final flux in bmflux, the value that made us go negative
                         bFlux = psi_current[i][j - 1];                                         // reassign flux for alpha=0 only in this cell
                         bmflux.push_back(bFlux);                                               // add in new flux value
-                        psi_current[i][j] = front_coeff * (bFlux + dz * q[i][j] / (2 * mu_n)); // recalculate cell-center flux
+                        psi_current[i][j] = front_coeff * (bFlux + dz * q[i] / (2 * mu_n)); // recalculate cell-center flux
                     }
                     bmflux.push_back((1 / (1 - alpha)) * (psi_current[i][j] - alpha * bFlux)); // Append new flux value with alpha!=0
                 }
@@ -505,7 +494,7 @@ int main(int argc, char const *argv[])
                     // Back sweep in z
                     fFlux = fmflux.back();
                     front_coeff = 1 / (1 + Sig_t * dz / (2 * abs(mu_n)));
-                    psi_current[i][j] = front_coeff * (fFlux + dz * q[i][j] / (2 * abs(mu_n)));
+                    psi_current[i][j] = front_coeff * (fFlux + dz * q[i] / (2 * abs(mu_n)));
 
                     // This handles when the flux goes negative.
                     // Take the incoming flux to be equal to the previous cell-center flux (alpha=0)
@@ -514,7 +503,7 @@ int main(int argc, char const *argv[])
                         fmflux.erase(std::find(fmflux.begin(), fmflux.end(), fFlux));               // Delete the final flux in fmflux, the value that made us go negative
                         fFlux = psi_current[i][j + 1];                                              // reassign flux for alpha=0 only in this cell
                         fmflux.push_back(fFlux);                                                    // add in new flux value
-                        psi_current[i][j] = front_coeff * (fFlux + dz * q[i][j] / (2 * abs(mu_n))); // recalculate cell-center flux
+                        psi_current[i][j] = front_coeff * (fFlux + dz * q[i] / (2 * abs(mu_n))); // recalculate cell-center flux
                     }
 
                     fmflux.push_back(1 / (1 - alpha) * (psi_current[i][j] - alpha * fFlux)); // Append new flux value with alpha!=0
@@ -535,7 +524,7 @@ int main(int argc, char const *argv[])
 
             for (int k = 0; k < n_mu; k++) // loop over angles to update scatter source
             {
-                q[k][m] = Sig_s / (4 * M_PI) * scalar_flux_current[m] + S[k][m]; // Update scatter source --> scalar flux is true over all angles
+                q[k] = Sig_s / (4 * M_PI) * scalar_flux_current[m] + S[k]; // Update scatter source --> scalar flux is true over all angles
             }
             angular_flux_col.clear(); // Clear angular flux vector                                            // Clear angular flux vector
         }
@@ -562,7 +551,6 @@ int main(int argc, char const *argv[])
             error = sqrt(running_error);
             printf("        Iteration %d: Error = %e\n",
                    iteration_num, error);
-
         }
         iteration_num += 1;
         if (iteration_num == max_iters)
@@ -607,13 +595,13 @@ int main(int argc, char const *argv[])
 
     outfile << "z,Flux\n";
 
-    double z_sum = dzs[0]/2.0;
+    double z_sum = dzs[0] / 2.0;
     for (int j = 0; j < tot_n_cells; j++)
     {
         region_index = find_region_index(j, n_cells); // determines the spatial region we are in
         dz = dzs[region_index];
-        outfile << z_sum<< "," << scalar_flux_old[j] << "\n";
-        z_sum+=dz;
+        outfile << z_sum << "," << scalar_flux_old[j] << "\n";
+        z_sum += dz;
     }
     outfile.close();
     printf("    CSV export completed: %s\n\n", output_filename.c_str());

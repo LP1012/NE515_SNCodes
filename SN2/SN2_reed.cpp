@@ -459,7 +459,7 @@ int main(int argc, char const *argv[])
             // The following implements a quadrature rule for a source term.
             // Since this code was not intended to solve for a source other than zero,
             // the structure is left as a placeholder.
-            S[i][j] = sources[region_index]; // pull the source value based on the region (assumes constant source in a region)
+            S[i][j] = sources[region_index]/(4.0 * M_PI); // pull the source value based on the region (assumes constant source in a region)
             q[i][j] = S[i][j];               // for the first iteration, we assume a 0 scalar flux everywhere
         }
     }
@@ -491,8 +491,8 @@ int main(int argc, char const *argv[])
                 bmflux.clear();
                 if (albedo_bool)
                 {
-                    LH_boundary_fluxes[i] = albedo * LH_boundary_fluxes[n_mu - i + 2];
-                    bmflux.push_back(albedo * LH_boundary_fluxes[n_mu - i + 2]); // pull the correct albedo flux
+                    LH_boundary_fluxes[i] = albedo * LH_boundary_fluxes[n_mu - (i + 1)];
+                    bmflux.push_back(albedo * LH_boundary_fluxes[n_mu - (i + 1)]); // pull the correct albedo flux
                     // cout << "DEBUG: albedo flux for i =" << i << ": " << bmflux.back() << endl;
                 }
                 else
@@ -555,16 +555,6 @@ int main(int argc, char const *argv[])
                 }
             }
         }
-        // // rescale LH boundary now that there is not just 0 values
-        // if (iteration_num > 2)
-        // {
-        //     double BC_scaling_factor_left = BC_scaling(mu_vec, w_vec, LH_boundary_fluxes, "L");
-        //     for (int k = 0; k < LH_boundary_fluxes.size(); k++)
-        //     {
-        //         LH_boundary_fluxes[k] *= (1 / BC_scaling_factor_left);
-        //         cout << "DEBUG: BC Scaling Factor = " << BC_scaling_factor_left<<endl;
-        //     }
-        // }
 
         // Create vectors from the columns of the angular fluxes to integrate
         for (int m = 0; m < tot_n_cells; m++)
