@@ -253,13 +253,18 @@ int main(int argc, char const *argv[])
         // double BC_scaling_factor_right = BC_scaling(mu_vec,w_vec,gammas_R,"R"); // calculate RH scaling factor
 
         printf("    Scaling numerical flux values... ");
+        double j_left = 0;
         for (int k = 0; k < n_mu; k++)
         {
             gammas_L[k] *= (1 / BC_scaling_factor_left);
+            
+            
+            j_left += gammas_L[k] * mus[k] * w_vec[k];
 
             // *** UNCOMMENT THIS FOR NONZERO RH BOUNDARY CONDITION ***
             // gammas_R[k] *= (1/BC_scaling_factor_right);
         }
+        cout << "j_left = " << 2.0 * M_PI * j_left << endl;
         printf("Done.\n");
     }
 

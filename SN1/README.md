@@ -10,3 +10,6 @@ The compile the code, use the following command: `g++ -I./src SN1.cpp ./src/*.cp
 To run the code from the SN1 directory, simply run `./SN1` in a terminal.
 This all assumes that `g++` compiler is up to date.
 For a streamlined case, use the `run` bash script included to compile and run the code and plot the output.
+
+## Plotting
+A `make_plots.py` has been written to generate a plot of the 100-cell computation, taking the `.csv` file as input.

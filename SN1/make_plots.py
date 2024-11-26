@@ -24,11 +24,13 @@ data = pd.read_csv(file,skiprows=3)
 sns.lineplot(x=data.iloc[:, 0],y=data.iloc[:, 1],label=file,linewidth=4)
 
 plt.legend()
+plt.grid("on")
 plt.xlabel("z")
 plt.ylabel("Scalar Flux")
 plt.title("SN1 Flux Output")
 plt.savefig("SN1_plot.png",dpi=300)
 plt.close()
 
+print("")
 print("Plot exported.")
 print("")
