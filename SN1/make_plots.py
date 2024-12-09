@@ -28,7 +28,7 @@ plt.grid("on")
 plt.xlabel("z")
 plt.ylabel("Scalar Flux")
 plt.title("SN1 Flux Output")
-plt.savefig("SN1_plot.png",dpi=300)
+plt.savefig("plots/SN1_plot.png",dpi=300)
 plt.close()
 
 print("")

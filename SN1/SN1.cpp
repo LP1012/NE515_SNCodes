@@ -62,7 +62,7 @@ double calc_error(const std::vector<double> current_flux, const std::vector<doub
     return error;
 }
 
-double GQ_integrate(const std::vector<double> &f, const std::vector<double> &weights)
+double GQ_integrate(const std::vector<double> f, const std::vector<double> weights)
 // Function evaluates the Gaussian quadrature using the function values and weights
 {
     double sum = 0;
@@ -95,7 +95,7 @@ double Gamma_R()
     return 0;
 }
 
-double BC_scaling(const std::vector<double> &mus, const std::vector<double> &weights, const std::vector<double> &gammas, string flag)
+double BC_scaling(const std::vector<double> mus, const std::vector<double> weights, const std::vector<double> gammas, string flag)
 // Function calculates the scaling factor for the boundary fluxes
 // Variable "flag" specifies whether the flux is on the right or left boundary; takes values of "R" and "L", respectively
 {
@@ -167,7 +167,7 @@ int main(int argc, char const *argv[])
     int n_cells[4] = {10, 20, 50, 100};                  // Define number of cells in space
     double alpha = 0.5;                                  // specifies diamond differencing
     int max_iters = 100;                                 // Safety measure
-    alglib::ae_int_t n_mu = 8;                           // Number of quadrature nodes in mu
+    alglib::ae_int_t n_mu = 32;                           // Number of quadrature nodes in mu
     std::vector<double> fmflux;                          // allocate memory for storing cell fluxes -- "forward marching flux"
     std::vector<double> bmflux;                          // allocate memory for storing cell fluxes -- "backward marching flux"
     string output_filename;

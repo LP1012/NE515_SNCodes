@@ -1,0 +1,219 @@
+
+***************************************************
+                 SN1 CODE EXECUTION
+***************************************************
+
+
+Run Specifications:
+    Sigma_s: 0.5000               Sigma_f: 0.0000
+    Sigma_t: 1.0000               Length (L): 5.0
+    Alpha: 0.5000                 Max Iterations: 100
+    Quadrature Nodes: 8           Error Tolerance: 1.0e-06
+
+Calculating GQ weights and discrete ordinates... Done.
+Casting GQ data to a vector (weights) and array/vector (scattering angle)...Done.
+Initializing variables and iterating over cell sizes...
+
+GQ Weights:  w = [0.1012,0.2224,0.3137,0.3627,0.3627,0.3137,0.2224,0.1012]
+GQ Nodes:   mu = [-0.9603,-0.7967,-0.5255,-0.1834,0.1834,0.5255,0.7967,0.9603]
+
+Assigning boundary conditions...
+    Analytical fluxes set.
+    Calculating scaling factor... Done.
+    LH Scaling factor = 2.0000
+    Scaling numerical flux values... j_left = 1
+Done.
+
+---------------------------------------------
+Begin looping over cell numbers...
+---------------------------------------------
+
+Number of cells = 10
+    Set spatial step size... dz = 0.5000
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.933184e-01
+        Iteration 2: Error = 1.468384e-02
+        Iteration 3: Error = 6.542531e-02
+        Iteration 4: Error = 4.790066e-02
+        Iteration 5: Error = 5.538842e-02
+        Iteration 6: Error = 5.088781e-02
+        Iteration 7: Error = 5.428853e-02
+        Iteration 8: Error = 5.126171e-02
+        Iteration 9: Error = 5.413686e-02
+        Iteration 10: Error = 5.131792e-02
+        Iteration 11: Error = 5.411238e-02
+        Iteration 12: Error = 5.132749e-02
+        Iteration 13: Error = 5.410801e-02
+        Iteration 14: Error = 5.132925e-02
+        Iteration 15: Error = 5.410718e-02
+        Iteration 16: Error = 5.132959e-02
+        Iteration 17: Error = 5.410701e-02
+        Iteration 18: Error = 5.132966e-02
+        Iteration 19: Error = 5.410698e-02
+        Iteration 20: Error = 5.132967e-02
+        Iteration 21: Error = 5.410697e-02
+        Iteration 22: Error = 5.132968e-02
+        Iteration 23: Error = 5.410697e-02
+        Iteration 24: Error = 5.132968e-02
+        Iteration 25: Error = 5.410697e-02
+        Iteration 26: Error = 5.132968e-02
+        Iteration 27: Error = 5.410697e-02
+        Iteration 28: Error = 5.132968e-02
+        Iteration 29: Error = 5.410697e-02
+        Iteration 30: Error = 5.132968e-02
+        Iteration 31: Error = 5.410697e-02
+        Iteration 32: Error = 5.132968e-02
+        Iteration 33: Error = 5.410697e-02
+        Iteration 34: Error = 5.132968e-02
+        Iteration 35: Error = 5.410697e-02
+        Iteration 36: Error = 5.132968e-02
+        Iteration 37: Error = 5.410697e-02
+        Iteration 38: Error = 5.132968e-02
+        Iteration 39: Error = 5.410697e-02
+        Iteration 40: Error = 5.132968e-02
+        Iteration 41: Error = 5.410697e-02
+        Iteration 42: Error = 5.132968e-02
+        Iteration 43: Error = 5.410697e-02
+        Iteration 44: Error = 5.132968e-02
+        Iteration 45: Error = 5.410697e-02
+        Iteration 46: Error = 5.132968e-02
+        Iteration 47: Error = 5.410697e-02
+        Iteration 48: Error = 5.132968e-02
+        Iteration 49: Error = 5.410697e-02
+        Iteration 50: Error = 5.132968e-02
+        Iteration 51: Error = 5.410697e-02
+        Iteration 52: Error = 5.132968e-02
+        Iteration 53: Error = 5.410697e-02
+        Iteration 54: Error = 5.132968e-02
+        Iteration 55: Error = 5.410697e-02
+        Iteration 56: Error = 5.132968e-02
+        Iteration 57: Error = 5.410697e-02
+        Iteration 58: Error = 5.132968e-02
+        Iteration 59: Error = 5.410697e-02
+        Iteration 60: Error = 5.132968e-02
+        Iteration 61: Error = 5.410697e-02
+        Iteration 62: Error = 5.132968e-02
+        Iteration 63: Error = 5.410697e-02
+        Iteration 64: Error = 5.132968e-02
+        Iteration 65: Error = 5.410697e-02
+        Iteration 66: Error = 5.132968e-02
+        Iteration 67: Error = 5.410697e-02
+        Iteration 68: Error = 5.132968e-02
+        Iteration 69: Error = 5.410697e-02
+        Iteration 70: Error = 5.132968e-02
+        Iteration 71: Error = 5.410697e-02
+        Iteration 72: Error = 5.132968e-02
+        Iteration 73: Error = 5.410697e-02
+        Iteration 74: Error = 5.132968e-02
+        Iteration 75: Error = 5.410697e-02
+        Iteration 76: Error = 5.132968e-02
+        Iteration 77: Error = 5.410697e-02
+        Iteration 78: Error = 5.132968e-02
+        Iteration 79: Error = 5.410697e-02
+        Iteration 80: Error = 5.132968e-02
+        Iteration 81: Error = 5.410697e-02
+        Iteration 82: Error = 5.132968e-02
+        Iteration 83: Error = 5.410697e-02
+        Iteration 84: Error = 5.132968e-02
+        Iteration 85: Error = 5.410697e-02
+        Iteration 86: Error = 5.132968e-02
+        Iteration 87: Error = 5.410697e-02
+        Iteration 88: Error = 5.132968e-02
+        Iteration 89: Error = 5.410697e-02
+        Iteration 90: Error = 5.132968e-02
+        Iteration 91: Error = 5.410697e-02
+        Iteration 92: Error = 5.132968e-02
+        Iteration 93: Error = 5.410697e-02
+        Iteration 94: Error = 5.132968e-02
+        Iteration 95: Error = 5.410697e-02
+        Iteration 96: Error = 5.132968e-02
+        Iteration 97: Error = 5.410697e-02
+        Iteration 98: Error = 5.132968e-02
+        Iteration 99: Error = 5.410697e-02
+MAX ITERATIONS REACHED! FINAL ERROR = 5.410697e-02
+    Completed processing 10 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 10_case3_diamond_out.csv
+
+Number of cells = 20
+    Set spatial step size... dz = 0.2500
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.318573e-01
+        Iteration 2: Error = 5.947842e-02
+        Iteration 3: Error = 1.999916e-02
+        Iteration 4: Error = 7.457037e-03
+        Iteration 5: Error = 2.937406e-03
+        Iteration 6: Error = 1.198285e-03
+        Iteration 7: Error = 5.011345e-04
+        Iteration 8: Error = 2.135618e-04
+        Iteration 9: Error = 9.236695e-05
+        Iteration 10: Error = 4.042713e-05
+        Iteration 11: Error = 1.786649e-05
+        Iteration 12: Error = 7.959230e-06
+        Iteration 13: Error = 3.569225e-06
+        Iteration 14: Error = 1.609407e-06
+        Iteration 15: Error = 7.290417e-07
+    Completed processing 20 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 20_case3_diamond_out.csv
+
+Number of cells = 50
+    Set spatial step size... dz = 0.1000
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.318572e-01
+        Iteration 2: Error = 5.947830e-02
+        Iteration 3: Error = 1.999904e-02
+        Iteration 4: Error = 7.456931e-03
+        Iteration 5: Error = 2.937327e-03
+        Iteration 6: Error = 1.198231e-03
+        Iteration 7: Error = 5.011001e-04
+        Iteration 8: Error = 2.135409e-04
+        Iteration 9: Error = 9.235482e-05
+        Iteration 10: Error = 4.042031e-05
+        Iteration 11: Error = 1.786277e-05
+        Iteration 12: Error = 7.957249e-06
+        Iteration 13: Error = 3.568196e-06
+        Iteration 14: Error = 1.608884e-06
+        Iteration 15: Error = 7.287808e-07
+    Completed processing 50 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 50_case3_diamond_out.csv
+
+Number of cells = 100
+    Set spatial step size... dz = 0.0500
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.318572e-01
+        Iteration 2: Error = 5.947829e-02
+        Iteration 3: Error = 1.999902e-02
+        Iteration 4: Error = 7.456916e-03
+        Iteration 5: Error = 2.937315e-03
+        Iteration 6: Error = 1.198223e-03
+        Iteration 7: Error = 5.010952e-04
+        Iteration 8: Error = 2.135380e-04
+        Iteration 9: Error = 9.235309e-05
+        Iteration 10: Error = 4.041934e-05
+        Iteration 11: Error = 1.786224e-05
+        Iteration 12: Error = 7.956967e-06
+        Iteration 13: Error = 3.568049e-06
+        Iteration 14: Error = 1.608809e-06
+        Iteration 15: Error = 7.287437e-07
+    Completed processing 100 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 100_case3_diamond_out.csv
+
+
+SN1 Code Completed Successfully.
+
+

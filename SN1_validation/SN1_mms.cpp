@@ -67,7 +67,7 @@ double calc_error(const std::vector<double> current_flux, const std::vector<doub
     return error;
 }
 
-double GQ_integrate(const std::vector<double> &f, const std::vector<double> &weights)
+double GQ_integrate(const std::vector<double> f, const std::vector<double> weights)
 // Function evaluates the Gaussian quadrature using the function values and weights
 {
     double sum = 0;

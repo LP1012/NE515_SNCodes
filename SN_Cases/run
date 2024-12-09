@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+g++ -I./src Case_1.cpp ./src/*.cpp -o Case_1 && ./Case_1 > output/Case_1.out
+g++ -I./src Case_2.cpp ./src/*.cpp -o Case_2 && ./Case_2 > output/Case_2.out
+g++ -I./src Case_3_step.cpp ./src/*.cpp -o Case_3_step && ./Case_3_step > output/Case_3_step.out
+g++ -I./src Case_3_diamond.cpp ./src/*.cpp -o Case_3_diamond && ./Case_3_diamond > output/Case_3_diamond.out
+g++ -I./src Case_4.cpp ./src/*.cpp -o Case_4 && ./Case_4 > output/Case_4.out
+g++ -I./src Case_5_albedo-0.5.cpp ./src/*.cpp -o Case_5_albedo-0.5 && ./Case_5_albedo-0.5 > output/Case_5_albedo-0.5.out
+g++ -I./src Case_5_albedo-1.0.cpp ./src/*.cpp -o Case_5_albedo-1.0 && ./Case_5_albedo-1.0 > output/Case_5_albedo-1.0.out
+
+python3 make_plots.py

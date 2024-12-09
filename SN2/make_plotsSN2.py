@@ -23,7 +23,7 @@ for file in glob.glob("*.csv"):
     plt.xlabel("z")
     plt.ylabel("Scalar Flux")
     plt.title("SN2 Output Plots")
-    plt.savefig(f"{file}.png",dpi=300)
+    plt.savefig("plots/" + f"{file}.png",dpi=300)
     plt.close()
 
 print("")

@@ -25,7 +25,7 @@ plt.legend()
 plt.xlabel("z")
 plt.ylabel("Scalar Flux")
 plt.title("MMS Convergence Plot")
-plt.savefig("MMS_plot.png",dpi=300)
+plt.savefig("plots/MMS_plot.png",dpi=300)
 plt.close()
 
 # New dataframe for L2 errors
@@ -54,7 +54,7 @@ plt.title("L2-norm of Error of MMS Solution Against Reference Curve")
 plt.yscale("log")
 plt.xscale("log")
 plt.grid(True,which="both")
-plt.savefig("L2error_plot.png",dpi=300)
+plt.savefig("plots/L2error_plot.png",dpi=300)
 plt.close()
 
 print(" ")

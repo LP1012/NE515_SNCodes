@@ -1,0 +1,131 @@
+
+***************************************************
+                 SN1 CODE EXECUTION
+***************************************************
+
+
+Run Specifications:
+    Sigma_s: 0.5000               Sigma_f: 0.0000
+    Sigma_t: 1.0000               Length (L): 5.0
+    Alpha: 0.0000                 Max Iterations: 100
+    Quadrature Nodes: 8           Error Tolerance: 1.0e-06
+
+Calculating GQ weights and discrete ordinates... Done.
+Casting GQ data to a vector (weights) and array/vector (scattering angle)...Done.
+Initializing variables and iterating over cell sizes...
+
+GQ Weights:  w = [0.1012,0.2224,0.3137,0.3627,0.3627,0.3137,0.2224,0.1012]
+GQ Nodes:   mu = [-0.9603,-0.7967,-0.5255,-0.1834,0.1834,0.5255,0.7967,0.9603]
+
+Assigning boundary conditions...
+    Analytical fluxes set.
+    Calculating scaling factor... Done.
+    LH Scaling factor = 2.0000
+    Scaling numerical flux values... j_left = 1
+Done.
+
+---------------------------------------------
+Begin looping over cell numbers...
+---------------------------------------------
+
+Number of cells = 10
+    Set spatial step size... dz = 0.5000
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.976095e-01
+        Iteration 2: Error = 7.669426e-02
+        Iteration 3: Error = 2.553927e-02
+        Iteration 4: Error = 9.324284e-03
+        Iteration 5: Error = 3.558935e-03
+        Iteration 6: Error = 1.393004e-03
+        Iteration 7: Error = 5.538287e-04
+        Iteration 8: Error = 2.224557e-04
+        Iteration 9: Error = 8.997140e-05
+        Iteration 10: Error = 3.656053e-05
+        Iteration 11: Error = 1.490505e-05
+        Iteration 12: Error = 6.090244e-06
+        Iteration 13: Error = 2.492409e-06
+        Iteration 14: Error = 1.021130e-06
+        Iteration 15: Error = 4.186750e-07
+    Completed processing 10 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 10_case3_step_out.csv
+
+Number of cells = 20
+    Set spatial step size... dz = 0.2500
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.704009e-01
+        Iteration 2: Error = 6.866729e-02
+        Iteration 3: Error = 2.272803e-02
+        Iteration 4: Error = 8.281430e-03
+        Iteration 5: Error = 3.161248e-03
+        Iteration 6: Error = 1.238928e-03
+        Iteration 7: Error = 4.935355e-04
+        Iteration 8: Error = 1.987053e-04
+        Iteration 9: Error = 8.057376e-05
+        Iteration 10: Error = 3.283071e-05
+        Iteration 11: Error = 1.342170e-05
+        Iteration 12: Error = 5.499542e-06
+        Iteration 13: Error = 2.256997e-06
+        Iteration 14: Error = 9.272773e-07
+    Completed processing 20 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 20_case3_step_out.csv
+
+Number of cells = 50
+    Set spatial step size... dz = 0.1000
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.489863e-01
+        Iteration 2: Error = 6.308772e-02
+        Iteration 3: Error = 2.089063e-02
+        Iteration 4: Error = 7.619865e-03
+        Iteration 5: Error = 2.912672e-03
+        Iteration 6: Error = 1.143370e-03
+        Iteration 7: Error = 4.563109e-04
+        Iteration 8: Error = 1.840855e-04
+        Iteration 9: Error = 7.480226e-05
+        Iteration 10: Error = 3.054479e-05
+        Iteration 11: Error = 1.251448e-05
+        Iteration 12: Error = 5.139081e-06
+        Iteration 13: Error = 2.113703e-06
+        Iteration 14: Error = 8.703115e-07
+    Completed processing 50 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 50_case3_step_out.csv
+
+Number of cells = 100
+    Set spatial step size... dz = 0.0500
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 2.406237e-01
+        Iteration 2: Error = 6.109536e-02
+        Iteration 3: Error = 2.025467e-02
+        Iteration 4: Error = 7.393531e-03
+        Iteration 5: Error = 2.828048e-03
+        Iteration 6: Error = 1.110916e-03
+        Iteration 7: Error = 4.436833e-04
+        Iteration 8: Error = 1.791294e-04
+        Iteration 9: Error = 7.284655e-05
+        Iteration 10: Error = 2.977047e-05
+        Iteration 11: Error = 1.220730e-05
+        Iteration 12: Error = 5.017092e-06
+        Iteration 13: Error = 2.065239e-06
+        Iteration 14: Error = 8.510605e-07
+    Completed processing 100 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 100_case3_step_out.csv
+
+
+SN1 Code Completed Successfully.
+
+

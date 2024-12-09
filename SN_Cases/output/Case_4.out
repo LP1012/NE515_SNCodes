@@ -1,0 +1,254 @@
+
+***************************************************
+                 SN1 CODE EXECUTION
+***************************************************
+
+
+Run Specifications:
+    Sigma_s: 0.9900               Sigma_f: 0.0000
+    Sigma_t: 1.0000               Length (L): 100.0
+    Alpha: 0.5000                 Max Iterations: 100
+    Quadrature Nodes: 8           Error Tolerance: 1.0e-06
+
+Calculating GQ weights and discrete ordinates... Done.
+Casting GQ data to a vector (weights) and array/vector (scattering angle)...Done.
+Initializing variables and iterating over cell sizes...
+
+GQ Weights:  w = [0.1012,0.2224,0.3137,0.3627,0.3627,0.3137,0.2224,0.1012]
+GQ Nodes:   mu = [-0.9603,-0.7967,-0.5255,-0.1834,0.1834,0.5255,0.7967,0.9603]
+
+Assigning boundary conditions...
+    Analytical fluxes set.
+    Calculating scaling factor... Done.
+    LH Scaling factor = 0.1012
+    Scaling numerical flux values... j_left = 1
+Done.
+
+---------------------------------------------
+Begin looping over cell numbers...
+---------------------------------------------
+
+Number of cells = 100
+    Set spatial step size... dz = 1.0000
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 6.859423e-01
+        Iteration 2: Error = 3.160092e-01
+        Iteration 3: Error = 1.973686e-01
+        Iteration 4: Error = 1.401790e-01
+        Iteration 5: Error = 1.070126e-01
+        Iteration 6: Error = 8.557714e-02
+        Iteration 7: Error = 7.069457e-02
+        Iteration 8: Error = 5.981999e-02
+        Iteration 9: Error = 5.156309e-02
+        Iteration 10: Error = 4.510321e-02
+        Iteration 11: Error = 3.992632e-02
+        Iteration 12: Error = 3.569497e-02
+        Iteration 13: Error = 3.217897e-02
+        Iteration 14: Error = 2.921625e-02
+        Iteration 15: Error = 2.668958e-02
+        Iteration 16: Error = 2.451217e-02
+        Iteration 17: Error = 2.261852e-02
+        Iteration 18: Error = 2.095829e-02
+        Iteration 19: Error = 1.949221e-02
+        Iteration 20: Error = 1.818922e-02
+        Iteration 21: Error = 1.702445e-02
+        Iteration 22: Error = 1.597774e-02
+        Iteration 23: Error = 1.503265e-02
+        Iteration 24: Error = 1.417557e-02
+        Iteration 25: Error = 1.339521e-02
+        Iteration 26: Error = 1.268208e-02
+        Iteration 27: Error = 1.202818e-02
+        Iteration 28: Error = 1.142670e-02
+        Iteration 29: Error = 1.087183e-02
+        Iteration 30: Error = 1.035857e-02
+        Iteration 31: Error = 9.882598e-03
+        Iteration 32: Error = 9.440164e-03
+        Iteration 33: Error = 9.027992e-03
+        Iteration 34: Error = 8.643216e-03
+        Iteration 35: Error = 8.283312e-03
+        Iteration 36: Error = 7.946056e-03
+        Iteration 37: Error = 7.629472e-03
+        Iteration 38: Error = 7.331807e-03
+        Iteration 39: Error = 7.051497e-03
+        Iteration 40: Error = 6.787141e-03
+        Iteration 41: Error = 6.537485e-03
+        Iteration 42: Error = 6.301400e-03
+        Iteration 43: Error = 6.077866e-03
+        Iteration 44: Error = 5.865962e-03
+        Iteration 45: Error = 5.664856e-03
+        Iteration 46: Error = 5.473787e-03
+        Iteration 47: Error = 5.292067e-03
+        Iteration 48: Error = 5.119067e-03
+        Iteration 49: Error = 4.954211e-03
+        Iteration 50: Error = 4.796973e-03
+        Iteration 51: Error = 4.646871e-03
+        Iteration 52: Error = 4.503460e-03
+        Iteration 53: Error = 4.366332e-03
+        Iteration 54: Error = 4.235111e-03
+        Iteration 55: Error = 4.109450e-03
+        Iteration 56: Error = 3.989027e-03
+        Iteration 57: Error = 3.873544e-03
+        Iteration 58: Error = 3.762726e-03
+        Iteration 59: Error = 3.656317e-03
+        Iteration 60: Error = 3.554079e-03
+        Iteration 61: Error = 3.455789e-03
+        Iteration 62: Error = 3.361242e-03
+        Iteration 63: Error = 3.270245e-03
+        Iteration 64: Error = 3.182618e-03
+        Iteration 65: Error = 3.098193e-03
+        Iteration 66: Error = 3.016812e-03
+        Iteration 67: Error = 2.938327e-03
+        Iteration 68: Error = 2.862600e-03
+        Iteration 69: Error = 2.789502e-03
+        Iteration 70: Error = 2.718910e-03
+        Iteration 71: Error = 2.650709e-03
+        Iteration 72: Error = 2.584791e-03
+        Iteration 73: Error = 2.521054e-03
+        Iteration 74: Error = 2.459403e-03
+        Iteration 75: Error = 2.399747e-03
+        Iteration 76: Error = 2.341999e-03
+        Iteration 77: Error = 2.286079e-03
+        Iteration 78: Error = 2.231911e-03
+        Iteration 79: Error = 2.179423e-03
+        Iteration 80: Error = 2.128544e-03
+        Iteration 81: Error = 2.079211e-03
+        Iteration 82: Error = 2.031362e-03
+        Iteration 83: Error = 1.984938e-03
+        Iteration 84: Error = 1.939884e-03
+        Iteration 85: Error = 1.896147e-03
+        Iteration 86: Error = 1.853676e-03
+        Iteration 87: Error = 1.812424e-03
+        Iteration 88: Error = 1.772345e-03
+        Iteration 89: Error = 1.733396e-03
+        Iteration 90: Error = 1.695535e-03
+        Iteration 91: Error = 1.658724e-03
+        Iteration 92: Error = 1.622924e-03
+        Iteration 93: Error = 1.588100e-03
+        Iteration 94: Error = 1.554217e-03
+        Iteration 95: Error = 1.521243e-03
+        Iteration 96: Error = 1.489146e-03
+        Iteration 97: Error = 1.457896e-03
+        Iteration 98: Error = 1.427466e-03
+        Iteration 99: Error = 1.397826e-03
+MAX ITERATIONS REACHED! FINAL ERROR = 1.397826e-03
+    Completed processing 100 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 100_case4_out.csv
+
+Number of cells = 300
+    Set spatial step size... dz = 0.3333
+    Initializing angular flux arrays... Done.
+    Intializing scattering source terms... Done.
+    Initialize computational error... Done.
+    Beginning source iteration...
+        Iteration 1: Error = 6.858392e-01
+        Iteration 2: Error = 3.159586e-01
+        Iteration 3: Error = 1.973132e-01
+        Iteration 4: Error = 1.401380e-01
+        Iteration 5: Error = 1.069814e-01
+        Iteration 6: Error = 8.555484e-02
+        Iteration 7: Error = 7.067997e-02
+        Iteration 8: Error = 5.981151e-02
+        Iteration 9: Error = 5.155923e-02
+        Iteration 10: Error = 4.510273e-02
+        Iteration 11: Error = 3.992827e-02
+        Iteration 12: Error = 3.569863e-02
+        Iteration 13: Error = 3.218382e-02
+        Iteration 14: Error = 2.922190e-02
+        Iteration 15: Error = 2.669573e-02
+        Iteration 16: Error = 2.451862e-02
+        Iteration 17: Error = 2.262512e-02
+        Iteration 18: Error = 2.096493e-02
+        Iteration 19: Error = 1.949882e-02
+        Iteration 20: Error = 1.819573e-02
+        Iteration 21: Error = 1.703082e-02
+        Iteration 22: Error = 1.598395e-02
+        Iteration 23: Error = 1.503867e-02
+        Iteration 24: Error = 1.418141e-02
+        Iteration 25: Error = 1.340085e-02
+        Iteration 26: Error = 1.268752e-02
+        Iteration 27: Error = 1.203342e-02
+        Iteration 28: Error = 1.143175e-02
+        Iteration 29: Error = 1.087669e-02
+        Iteration 30: Error = 1.036324e-02
+        Iteration 31: Error = 9.887091e-03
+        Iteration 32: Error = 9.444483e-03
+        Iteration 33: Error = 9.032145e-03
+        Iteration 34: Error = 8.647210e-03
+        Iteration 35: Error = 8.287154e-03
+        Iteration 36: Error = 7.949750e-03
+        Iteration 37: Error = 7.633026e-03
+        Iteration 38: Error = 7.335228e-03
+        Iteration 39: Error = 7.054789e-03
+        Iteration 40: Error = 6.790312e-03
+        Iteration 41: Error = 6.540539e-03
+        Iteration 42: Error = 6.304342e-03
+        Iteration 43: Error = 6.080701e-03
+        Iteration 44: Error = 5.868696e-03
+        Iteration 45: Error = 5.667492e-03
+        Iteration 46: Error = 5.476331e-03
+        Iteration 47: Error = 5.294523e-03
+        Iteration 48: Error = 5.121438e-03
+        Iteration 49: Error = 4.956501e-03
+        Iteration 50: Error = 4.799185e-03
+        Iteration 51: Error = 4.649009e-03
+        Iteration 52: Error = 4.505527e-03
+        Iteration 53: Error = 4.368331e-03
+        Iteration 54: Error = 4.237045e-03
+        Iteration 55: Error = 4.111321e-03
+        Iteration 56: Error = 3.990838e-03
+        Iteration 57: Error = 3.875298e-03
+        Iteration 58: Error = 3.764425e-03
+        Iteration 59: Error = 3.657963e-03
+        Iteration 60: Error = 3.555674e-03
+        Iteration 61: Error = 3.457336e-03
+        Iteration 62: Error = 3.362743e-03
+        Iteration 63: Error = 3.271701e-03
+        Iteration 64: Error = 3.184030e-03
+        Iteration 65: Error = 3.099563e-03
+        Iteration 66: Error = 3.018142e-03
+        Iteration 67: Error = 2.939619e-03
+        Iteration 68: Error = 2.863855e-03
+        Iteration 69: Error = 2.790721e-03
+        Iteration 70: Error = 2.720095e-03
+        Iteration 71: Error = 2.651861e-03
+        Iteration 72: Error = 2.585911e-03
+        Iteration 73: Error = 2.522143e-03
+        Iteration 74: Error = 2.460462e-03
+        Iteration 75: Error = 2.400777e-03
+        Iteration 76: Error = 2.343002e-03
+        Iteration 77: Error = 2.287055e-03
+        Iteration 78: Error = 2.232862e-03
+        Iteration 79: Error = 2.180348e-03
+        Iteration 80: Error = 2.129445e-03
+        Iteration 81: Error = 2.080089e-03
+        Iteration 82: Error = 2.032218e-03
+        Iteration 83: Error = 1.985772e-03
+        Iteration 84: Error = 1.940697e-03
+        Iteration 85: Error = 1.896939e-03
+        Iteration 86: Error = 1.854448e-03
+        Iteration 87: Error = 1.813177e-03
+        Iteration 88: Error = 1.773079e-03
+        Iteration 89: Error = 1.734112e-03
+        Iteration 90: Error = 1.696234e-03
+        Iteration 91: Error = 1.659406e-03
+        Iteration 92: Error = 1.623589e-03
+        Iteration 93: Error = 1.588749e-03
+        Iteration 94: Error = 1.554851e-03
+        Iteration 95: Error = 1.521862e-03
+        Iteration 96: Error = 1.489750e-03
+        Iteration 97: Error = 1.458487e-03
+        Iteration 98: Error = 1.428042e-03
+        Iteration 99: Error = 1.398390e-03
+MAX ITERATIONS REACHED! FINAL ERROR = 1.398390e-03
+    Completed processing 300 cells.
+    Exporting scalar fluxes to CSV file...
+    CSV export completed: 300_case4_out.csv
+
+
+SN1 Code Completed Successfully.
+
+
