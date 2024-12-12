@@ -19,9 +19,9 @@
 \RequirePackage{graphicx}
 \RequirePackage{float}
 \RequirePackage{xcolor}
-% \definecolor{LightGray}{gray}{0.95}
+\definecolor{LightGray}{gray}{0.95}
 \RequirePackage{apptools}
-% \RequirePackage{minted}
+\RequirePackage{minted}
 \RequirePackage{authblk}
 \RequirePackage{units}
 % \RequirePackage[inkscapeformat=png]{svg}
@@ -36,6 +36,7 @@
 \geometry{margin=1in}
 
 \titleformat{\section}{\normalfont\Large\itshape}{\textbf{Part~\thesection: }}{1em}{}
+\titleformat{\subsection}{\normalfont\large}{\textbf{\thesubsection: }}{1em}{}
 \AtAppendix{\titleformat{\section}{\normalfont\Large\itshape}{\textbf{Appendix~\thesection: }}{1em}{}}
 
 \hypersetup{

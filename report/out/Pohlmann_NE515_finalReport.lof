@@ -1,0 +1,10 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Numerical solution plotted against analytical manufactured solution.\relax }}{7}{figure.caption.1}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Convergence study of MMS solution using the discrete L2-norm.\relax }}{7}{figure.caption.2}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Case 1 generated plots.\relax }}{9}{figure.caption.3}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Case 2 generated plots.\relax }}{10}{figure.caption.4}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Case 3 generated plots with $\alpha = 0.0$ (step differencing).\relax }}{11}{figure.caption.5}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Case 3 generated plots with $\alpha = 0.5$ (step differencing).\relax }}{12}{figure.caption.6}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Case 4 Generated Plot\relax }}{13}{figure.caption.7}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Case 5 generated plots with both albedo conditions: $\gamma = 0.5, 1.0$.\relax }}{14}{figure.caption.8}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Case 6 generated plots with both scattering conditions, $\Sigma _s = 0.9, 0.99$, and both step and diamond differencing ($\alpha =0.0,0.5$).\relax }}{15}{figure.caption.9}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Generated plot from Reed problem application.\relax }}{16}{figure.caption.11}%

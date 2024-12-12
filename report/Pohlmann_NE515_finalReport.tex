@@ -1,10 +1,6 @@
-\documentclass{math_hw}
-\usepackage{cleveref}
-\usepackage{amsthm}
-\usepackage{bm}
-\usepackage{subcaption}
-\renewcommand\qedsymbol{\blacksquare}
-
+\documentclass{NE515}
+\usepackage{physics}
+\usepackage{booktabs}
 
 \onehalfspacing
 \theoremstyle{definition}
@@ -17,17 +13,499 @@ NE515: Radiation Interaction and Transport}
 \affil[1]{University of New Mexico, Department of Nuclear Engineering}
 %\affil[2]{University of New Mexico, Department of \ldots}
 
-\date{\textbf{Due: 13 December 2024}}
+\date{\textbf{Due: 11 December 2024}}
 
 \begin{document}
     \maketitle
     \tableofcontents
+    \listoffigures
     \clearpage
+
+    \section*{Preface}
+    The code for this project was developed and uploaded to a GitHub repository for improved code readability and version control.
+    The hope is that the results of this work may go on to help other students in the industry who are also getting started learning about radiation transport.
 
 
     \section{Premise and Theory}
+    The purpose of this report is to outline the steps taken and results generated for the solution of the linear Boltzmann transport equation on a 1D slab subject to varying conditions.
+    In the application of radiation transport, the general 1D, timme-independent, monoenergetic transport equation can be written as:
+    \begin{equation}
+        \label{eq:1d-transport-equation}
+        \mu \pdv[]{\psi }{z}\left( z,\mu ) \right)+\Sigma_t \psi (z,\mu)=\left( \frac{\Sigma_s+\nu\Sigma_f}{4\pi} \right)\phi(z)+S(z)
+    \end{equation}
+    were $\mu=\cos(\vec{\Omega}'\cdot \vec{\Omega})$, the cosine of the scattering angle, $Sigma_t$ is the total macroscopic cross-section, $\Sigma_s$ is the zero\textsuperscript{th}-order macroscopic scattering cross-section, $\psi(z,\mu)$ is the angular neutron flux, and $S(z)$ is a generalized, isotropic volumetric source.
+    Additionally, the variable of interest, $\phi(z)$, is the scalar neutron flux, defined as:
+    \begin{equation}
+        \label{eq:phi-definition}
+        \phi(z)=\int_{4\pi}^{}\psi(z,\vec{\Omega})\dd \vec{\Omega}.
+    \end{equation}
+    The above is subject to boundary conditions on the edges of the slab, namely $\psi(z=0,\mu)$ and $\psi(z=L,\mu)$ for a slab of length $L$.
+
+    \Cref{eq:1d-transport-equation} is known as an \textit{integro-differential equation}, as it is an equation that contains a function, its derivative, and its integral.
+    To solve this, one must discretize both the derivatives and integrals in a set of algebraic relations, then solve.
+
+    First, the domain is discretized uniformly using a finite volume approach in the spacial axis.
+    That is, each volume (in 1D geometry, this is just a line segment) holds the average function value as numerically computed at its \textit{center}.
+    \begin{equation}
+        \bar{\psi}_{n,i}=\frac{1}{\Delta z}\int_{z_{i-\nicefrac{1}{2}}}^{z_{i+\nicefrac{1}{2}}} \psi_n(z)\dd z
+    \end{equation}
+    where $\bar{\psi}_{n,i}$ is the \textit{cell-averaged} angular flux (and will be henceforth written as $\psi_{n,i}$) at $z=\Delta z\left( i+\nicefrac{1}{2}\right)$ and $\mu=\mu_n\in[\mu_1,\mu_2,\ldots,\mu_N]$, $\Delta z$ is the cell width, and $i\in[1,2,\ldots,I]$.
+    This implies that functional relations must be made not only for the function values themselves, but also of the numerical ``fluxes'' at the boundaries of each cell.
+
+    Though discretization of the slab spatially is straightforward, the choice of discrete angular values is an opportunity to improve numerical accuracy while also reducing computational effort.
+    Gaussian quadrature is a technique using in numerical integration in which the error is minimized by selecting particular weights and multiplying them by function values evaluated at specially-selected points.
+    The generalized case can be written as~\cite{gezerlisNumericalMethodsPhysicsa}:
+    \begin{equation}
+        \int_{-1}^{1} f(x) \dd x = \sum_{k=1}^{K-1} w_k f(x_k)
+    \end{equation}
+    The values of the $x_k$'s (the ``nodes'') turn out to be zeros of Legendre polynomials of order $K$ on the standard interval $[-1,1]$.
+    Legendre polynomials are a family of equations that share a common set of favorable properties, such as orthogonality, and can be generated using Rodrigues' formula~\cite{LegendrePolynomials2024}:
+    \begin{equation}
+        \label{rodrigues forumula}
+        P_K (x)= \frac{1}{2^K} \sum_{k=0}^{K}
+        \begin{pmatrix}
+            n \\
+            k
+        \end{pmatrix}^2
+        \left( \frac{x-1}{2} \right)^k.
+    \end{equation}
+    The weights for Gauss quadrature (the $c_k$'s) can be calculated with~\cite{gezerlisNumericalMethodsPhysicsa}:
+    \begin{equation}
+        \label{gauss weights}
+        c_k=\frac{2}{\left( 1-x_k^2 \right)\left[ P' (x_k) \right]^2}
+    \end{equation}
+    Instead of directly applying\cref{rodrigues forumula,gauss weights}, a Gaussian quadrature library for C++ was directly implemented for numerical integration.
+
+    By assuming azimuthal independence, we rewrite \cref{eq:phi-definition} as:
+    \begin{equation}
+        \phi(z)=\int_{4\pi}^{}\psi(z,\vec{\Omega})\dd \vec{\Omega} = \int_{0}^{2\pi } \dd \Omega \int_{-1}^{1} \psi(z,\mu)\dd \mu.
+    \end{equation}
+    Using the previous notation, \cref{eq:1d-transport-equation} can be written in terms of discrete scattering angles, or \textit{discrete ordinates}, as:
+    \begin{equation}
+        \mu_n \pdv[]{\psi_n (z)}{z}+\Sigma_t(z)\psi_n(z)=\frac{\Sigma_s}{2}\sum_{k=1}^{N} w_k \psi_k(z)+S(z)
+    \end{equation}
+    Letting:
+    \begin{equation}
+        q^{(j-1)}(z) = \frac{\Sigma_s}{2}\sum_{k=1}^{N} w_k \psi^(j)_k(z)+S(z)
+    \end{equation}
+    and:
+    \begin{equation}
+        q_{n,i}=\bar{q(z)}=\frac{1}{\Delta z_i}\int_{z_{i-\nicefrac{1}{2}}}^{z_{i+\nicefrac{1}{2}}} q_n(z)\dd z
+    \end{equation}
+    a source iteration is created with:
+    \begin{equation}
+        \label{source iteration}
+        \mu_n \dv[]{\psi_n^(j)(z)}{z}+\Sigma_t(z)\psi_n^(j)(z)=q^{(j-1)}(z)
+    \end{equation}
+    By integrating \cref{source iteration} over an arbitrary cell, we find:
+    \begin{equation}
+        \mu_n\left( \psi_{n,i+\nicefrac{1}{2}}^(j)-\psi_{n,i-\nicefrac{1}{2}^(j)} \right)+\Sigma_{t,i}\Delta z_i \psi_{n,i}^(j)=\Delta z_i q_{n,i}^{((j)-1)}
+    \end{equation}
+
+    To iterate the source, first the solution is swept in one direction along $z$ with the flow of neutrons, then is swept in the opposite direction to solve for the neutrons flowing the other way.
+    We define the following differencing closure:
+    \begin{subequations}
+        \label{differencing closure}
+        \begin{equation}
+            \psi_{n,i}=(1-\alpha)\psi_{n,i+\nicefrac{1}{2}}+\alpha \psi_{n,i-\nicefrac{1}{2}},\quad \mu_n>0
+        \end{equation}
+        \begin{equation}
+            \psi_{n,i}=\alpha\psi_{n,i+\nicefrac{1}{2}}+(1-\alpha) \psi_{n,i-\nicefrac{1}{2}},\quad \mu_n<0
+        \end{equation}
+    \end{subequations}
+    corresponding to forward and backward particle flow, respectively.
+    When $\alpha=\nicefrac{1}{2}$, \cref{differencing closure} is known as \textit{diamond differencing}, while when $\alpha=0$, \cref{differencing closure} is known as \textit{step differencing}.
+    These correspond to quadratic and linear convergence, respectively.
+    Thus, the following two algorithms were implemented:
+    \begin{subequations}
+        \begin{equation}
+            \label{forward sweep}
+            \psi_{n,i}^(j)=\left( \frac{1}{1+\frac{\Sigma_{t,i}\Delta z_i}{2\mu_n}} \right)\left( \psi_{n,i-\nicefrac{1}{2}}+\frac{\Delta z_i q_{n,i}^{(j-1)}}{2\mu_n} \right), \quad n=1,2,\ldots,\frac{N}{2}
+        \end{equation}
+        \begin{equation}
+            \label{backward sweep}
+            \psi_{n,i}^(j)=\left( \frac{1}{1+\frac{\Sigma_{t,i}\Delta z_i}{2|\mu_n|}} \right)\left( \psi_{n,i+\nicefrac{1}{2}}+\frac{\Delta z_i q_{n,i}^{(j-1)}}{2|\mu_n|} \right), \quad n=\frac{N}{2}+1,\frac{N}{2}+2,\ldots,{N}
+        \end{equation}
+    \end{subequations}
+    along with:
+    \begin{equation}
+        \label{flux relation}
+        \psi_{n,i+\nicefrac{1}{2}}=2\psi_{n,i}-\psi_{n,i-\nicefrac{1}{2}}
+    \end{equation}
+
+    \subsection{Numerical Considerations}
+    Since negative flux is non-physical but numerically possible, particularly if the mesh is not fine enough for larger $\alpha$.
+    When such an event occurs, the code was implemented with a ``negative flux fixup'', which changes from diamond differencing to step differencing when the angular flux dips below zero.
+
+    In addition, all boundary source terms were normalized to 1 for convenience.
+    If $\Gamma_{n,\nicefrac{1}{2}}=\Gamma_{n,L}$ and $\Gamma_{n,I+\nicefrac{1}{2}}=\Gamma_{n,L}$ are boundary flux terms, the following algorthm was implemented:
+    \begin{equation}
+        \label{numerical flux scaling}
+        \int_{4\pi }^{} \Gamma_{L/R,n}\dd \vec{\Omega} \approx 2\pi \sum_{n=0}^{N/2} w_n\mu_n \Gamma_{L/R,n}\equiv \gamma_n
+    \end{equation}
+    Then: $\Gamma_{L/R,n}\rightarrow \nicefrac{\Gamma_{L/R,n}}{\gamma_N}$.
+
+
+    \section{Code Verification: Method of Manufactured Solutions}
+    To verify the above numerical, the Method of Manufacture Solutions was implemented.
+    That is, a solution was specified of the form:
+    \begin{equation}
+        \psi^m (z,\mu) = C f(z) g(\mu)
+    \end{equation}
+    and substituted into \cref{eq:1d-transport-equation}.
+    Assuming no fission and solving for the manufactured volumetric source:
+    \begin{equation}
+        \label{man source eq}
+        Q^m(z,\mu) = \mu \pdv[]{\psi }{z}+\Sigma_t\psi(z,\mu)-\frac{\Sigma_s}{4\pi}\phi(z)
+    \end{equation}
+    By choosing a shifted Legendre polynomial that is \textit{strictly positive} in $\mu$ and a simple quadratic profile in $z$ with zeros on the boundaries $[0,L]$, the following function was selected:
+    \begin{equation}
+        \label{manufactured solution}
+        \begin{split}
+            \psi_{m}(z,\mu)&=\frac{1}{\pi L^2}z(L-z)\left[ P_3 (\mu)+1\right]\\
+            &= \frac{1}{2\pi L^2}z(L-z)\left[ 5\mu^3-3\mu+2\right]
+        \end{split}
+    \end{equation}
+    Substituting \cref{manufactured solution} into \cref{man source eq}, we get a manufactured source in terms of $P_3(\mu)$ as:
+    \begin{equation}
+        \begin{split}
+            Q^m(z,\mu)&=\frac{\mu }{\pi L^2}\left[ P_3(\mu)+1 \right]\left( L-2z \right) +\\
+            &+\frac{\Sigma_t}{\pi L^2}z\left( L-z \right)\left[ P_3(\mu)+1 \right]+\\
+            &-\frac{\Sigma_s}{\pi L^2}z\left( L-z \right)
+        \end{split}
+    \end{equation}
+    When \cref{manufactured solution} is integrated over the solid angle, the analytical scalar is given as:
+    \begin{equation}
+        \phi^m(z)=\frac{4}{L^2}z\left( L-z \right)
+    \end{equation}
+
+    Similar to the previous section, we write a discrete-ordinates transport form of \cref{man source eq} as:
+    \begin{equation}
+        \mu_n \dv[]{\psi_{n}^m}{z}+\Sigma_t \psi_n ^m (z)=\frac{\Sigma_s}{4\pi}\phi^m(z) + S_{n,i}
+    \end{equation}
+    where we define:
+    \begin{equation}
+        \label{manufactured source}
+        S_{n,i}=\frac{1}{\Delta _z}\int_{z_{i-\nicefrac{1}{2}}}^{z_{i+\nicefrac{1}{2}}}Q^m(\mu_n,z)\dd z.
+    \end{equation}
+    \Cref{manufactured source} requires the use of numerical integration again, and to maintain the quadratic convergence from the diamond differencing, a second-order numerical quadrature scheme must also be implemented.
+    One of the simplest choices is the Trapezoid Rule~\cite{gezerlisNumericalMethodsPhysicsa}, which when applied to \cref{manufactured source} gives:
+    \begin{equation}
+        S_{n,i}\approx\frac{1}{2}\left( Q^m(\mu_n,z_{i+\nicefrac{1}{2}})+Q^m(\mu_n,z_{i-\nicefrac{1}{2}} \right)
+    \end{equation}
+
+    When implemented over various number of cells, the numerical solution converged near-quadratically to the manufactured solution.
+    A plot of the numerical solution can be found in \cref{true-solution-convergence}.
+    A convergence study was also conducted and can be found in \cref{convergence-study}.
+
+
+    \begin{figure}[!htb]
+        \centering
+        \includegraphics[width=0.8\textwidth]{../SN1_validation/plots/MMS_plot}
+        \caption{Numerical solution plotted against analytical manufactured solution.}
+        \label{true-solution-convergence}
+    \end{figure}
+
+    \begin{figure}[!htb]
+        \centering
+        \includegraphics[width=0.8\textwidth]{../SN1_validation/plots/L2error_plot}
+        \caption{Convergence study of MMS solution using the discrete L2-norm.}
+        \label{convergence-study}
+    \end{figure}
+
+
     \section{Single-Section 1D Slab}
-    
+    The following cases were run with the given parameters and boundary conditions.
+    Cases 1--5 had their conditions hard-coded in because they were based on the code titled \texttt{SN1}, while case 5 was based off of \texttt{SN2}, which allowed for a variable input using a text file.
+    For all cases in this section, the following parameters were implemented:
+    \begin{itemize}
+        \item Isotropic scattering, $\Sigma_{s,l}=0$ for $l\geq 1$.
+        \item Gaussian quadrature order, $N=8$.
+        \item Total cross-section, $\Sigma_t=1.0$.
+        \item No fission, $\Sigma_f=0.0$.
+        \item Source iteration tolerance, $\epsilon=10^{-6}$.
+    \end{itemize}
+
+    \subsection{Cases 1 \& 2}
+    \begin{itemize}
+        \item Incident beam on left boundary moving along the most forward direction.
+        \item Vacuum boundary on right boundary.
+        \item No volumetric source.
+        \item $\Sigma_s=0.5$.
+        \item $L=5.0$.
+        \item $I=[10,20,50,100]$.
+        \item $\alpha=0.5$ (Case 1) and $\alpha=0.0$ (Case 2).
+    \end{itemize}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/10_case1_out_plot}
+            \caption{$I=10$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/20_case1_out_plot}
+            \caption{$I=20$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/50_case1_out_plot}
+            \caption{$I=50$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/100_case1_out_plot}
+            \caption{$I=100$ Cells}
+        \end{subfigure}
+
+        \caption{Case 1 generated plots.}
+        \label{fig:case-1}
+    \end{figure}
+    \clearpage
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/10_case2_out_plot}
+            \caption{$I=10$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/20_case2_out_plot}
+            \caption{$I=20$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/50_case2_out_plot}
+            \caption{$I=50$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/100_case2_out_plot}
+            \caption{$I=100$ Cells}
+        \end{subfigure}
+
+        \caption{Case 2 generated plots.}
+        \label{fig:case-2}
+    \end{figure}
+
+    \subsection{Case 3}
+    \begin{itemize}
+        \item \textit{Isotropic} incident beam on left boundary, normalized to unit incidence current.
+        \item Vacuum boundary on right boundary.
+        \item No volumetric source.
+        \item $\Sigma_s=0.5$.
+        \item $L=5.0$.
+        \item $I=[10,20,50,100]$.
+        \item $\alpha=0.0, 0.5$.
+    \end{itemize}
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/10_case3_step_out_plot}
+            \caption{$I=10$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/20_case3_step_out_plot}
+            \caption{$I=20$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/50_case3_step_out_plot}
+            \caption{$I=50$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/100_case3_step_out_plot}
+            \caption{$I=100$ Cells}
+        \end{subfigure}
+
+        \caption{Case 3 generated plots with $\alpha = 0.0$ (step differencing).}
+        \label{fig:case-3-step}
+    \end{figure}
+
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/10_case3_diamond_out_plot}
+            \caption{$I=10$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/20_case3_diamond_out_plot}
+            \caption{$I=20$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/50_case3_diamond_out_plot}
+            \caption{$I=50$ Cells}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/100_case3_diamond_out_plot}
+            \caption{$I=100$ Cells}
+        \end{subfigure}
+
+        \caption{Case 3 generated plots with $\alpha = 0.5$ (step differencing).}
+        \label{fig:case-3-diamond}
+    \end{figure}
+
+    \subsection{Case 4}
+    \begin{itemize}
+        \item Incident beam on left boundary moving along the most forward direction.
+        \item Vacuum boundary on right boundary.
+        \item No volumetric source.
+        \item $\Sigma_s=0.99$.
+        \item $L=100.0$.
+        \item $I=100$.
+        \item $\alpha=0.5$.
+    \end{itemize}
+
+    \begin{figure}[!htb]
+        \centering
+        \includegraphics[width=0.8\textwidth]{../SN_Cases/plots/100_case4_out_plot}
+        \caption{Case 4 Generated Plot}
+        \label{fig:case-4}
+    \end{figure}
+
+    \subsection{Case 5}
+    \begin{itemize}
+        \item Incident beam on left boundary.
+        \item Albedo (reflected) condition on right boundary.
+        \item $\Sigma_s=1.0$
+        \item $L=5.0$
+        \item $I=20$
+        \item Albedo coefficient, $\gamma=0.5,1.0$
+    \end{itemize}
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/20_case5_albedo-0.5_out_plot}
+            \caption{$I=20$ Cells, $\gamma = 0.5$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/20_case5_albedo-1.0_out_plot}
+            \caption{$I=20$ Cells, $\gamma = 1.0$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/100_case5_albedo-0.5_out_plot}
+            \caption{$I=100$ Cells, $\gamma = 0.5$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN_Cases/plots/100_case5_albedo-1.0_out_plot}
+            \caption{$I=20$ Cells, $\gamma = 1.0$}
+        \end{subfigure}
+
+        \caption{Case 5 generated plots with both albedo conditions: $\gamma = 0.5, 1.0$.}
+        \label{fig:case-5}
+    \end{figure}
+
+    \subsection{Case 6}
+    \begin{itemize}
+        \item Spatially uniform isotropic source, normalized such that the total number of neutrons in the slab is unity.
+        \item Vacuum boundary conditions
+        \item $\Sigma_s=0.9,0.99$
+        \item $L=100$
+        \item $I=100$
+        \item $\alpha=0.0,0.5$
+    \end{itemize}
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN2/plots/freeSurface1_alpha0_input_out.csv}
+            \caption{$\Sigma_s=0.9$, $\alpha=0.0$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN2/plots/freeSurface1_diamond_input_out.csv}
+            \caption{$\Sigma_s=0.9$, $\alpha=0.5$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN2/plots/freeSurface2_alpha0_input_out.csv}
+            \caption{$\Sigma_s=0.99$, $\alpha=0.0$}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{../SN2/plots/freeSurface2_diamond_input_out.csv}
+            \caption{$\Sigma_s=0.99$, $\alpha=0.5$}
+        \end{subfigure}
+
+        \caption{Case 6 generated plots with both scattering conditions, $\Sigma_s = 0.9, 0.99$, and both step and diamond differencing ($\alpha=0.0,0.5$).}
+        \label{fig:case-6}
+    \end{figure}
+
+
     \section{Reed Problem}
+    As a final, and arguably most important aside from the MMS solution, demonstration of the written code, the so-called Reed problem was implemented.
+    First, the basic code \texttt{SN1} was generalized to allow for arbitrary number of regions in a slab, with each region being able to handle different physical parameters and cell sizes.
+    This application is meant to test the codes ability to handle sudden, drastic changes in material properties.
+    The parameters for this can be found in \cref{tab:reed-params}.
+    \begin{table}
+        \centering
+        \begin{tabular}{lrrrrr}
+            \toprule
+            \textbf{Region No.}   & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} \\
+            \midrule
+            $\Sigma_t$            & 50.0       & 5.0        & 0.0        & 1.0        & 1.0        \\
+            $\Sigma_{s}/\Sigma_t$ & 0.0        & 0.0        & 0.0        & 0.9        & 0.9        \\
+            Source Strength       & 50.0       & 0.0        & 0.0        & 1.0        & 0.0        \\
+            Length                & 2.0        & 1.0        & 2.0        & 1.0        & 2.0        \\
+            \bottomrule
+        \end{tabular}
+        \caption{Reed Problem Parameters}
+        \label{tab:reed-params}
+    \end{table}
+
+    To improve numerical accuracy, $N=32$ quadrature nodes were implemented, along with a total of 900 cells.
+    The input file which was used to generate the numerical results can be found in \cref{sec:reed-input-file}.
+    As can be seen in \cref{fig:reed-figure}, the code performed very well, matching the expected result provided.
+
+
+    \begin{figure}[!htb]
+        \centering
+        \includegraphics[width=0.9\textwidth]{../SN2/plots/reed_out.csv}
+        \caption{Generated plot from Reed problem application.}
+        \label{fig:reed-figure}
+    \end{figure}
+    
+    \appendix
+    \section{Reed Input File}\label{sec:reed-input-file}
+    \inputminted[linenos, bgcolor=LightGray, fontsize=\footnotesize]{text}{../SN2/reed_input.txt}
+    \bibliography{NE515_final}
+    \bibliographystyle{ieeetr}
+
 
 \end{document}

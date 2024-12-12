@@ -24,6 +24,7 @@ for file in glob.glob("*.csv"):
 plt.legend()
 plt.xlabel("z")
 plt.ylabel("Scalar Flux")
+plt.grid(True,which="both")
 plt.title("MMS Convergence Plot")
 plt.savefig("plots/MMS_plot.png",dpi=300)
 plt.close()

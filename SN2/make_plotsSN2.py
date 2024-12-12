@@ -19,6 +19,7 @@ for file in glob.glob("*.csv"):
     data = pd.read_csv(file,skiprows=3)
     sns.lineplot(x=data.iloc[:, 0],y=data.iloc[:, 1], label=file,linewidth=3)
 
+    plt.grid("on")
     plt.legend()
     plt.xlabel("z")
     plt.ylabel("Scalar Flux")
