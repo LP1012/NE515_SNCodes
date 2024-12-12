@@ -14,6 +14,10 @@ The `SN1.cpp` code was the first to be created, and it used for very simple case
 ### SN1 Verification
 The `SN1_mms.cpp` code located `SN1_vericication` directory is an implementation of the Method of Manufactured Solutions to study the accuracy and convergence of the developed numerical scheme.
 
+### SN_Cases
+The `SN_Cases` directory holds specific applications of `SN1` for creation of the report.
+These cases can be found in `SN_Cases/NE520_F24_SN-Code-Assign.pdf`.
+
 ### SN2 
 The `SN2.cpp` code greatly improves on the `SN1` by allowing for a 1-D slab with arbitrary layers and variable physical values. 
 This allowed for implementation of the so-called Reed problem, which is a benchmark case for 1-D slab geometry that greatly tests the solver's capabilities.
