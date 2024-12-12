@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.11.11)  12 DEC 2024 16:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.11.11)  12 DEC 2024 16:21
 entering extended mode
- \write18 enabled.
+ restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
 **Pohlmann_NE515_finalReport.tex
@@ -466,7 +466,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/tools/shellesc.sty
 Package: shellesc 2019/11/08 v1.0c unified shell escape interface for LaTeX
-Package shellesc Info: Unrestricted shell escape enabled on input line 75.
+Package shellesc Info: Restricted shell escape enabled on input line 77.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/ifplatform/ifplatform.sty
 Package: ifplatform 2017/10/13 v0.4a Testing for the operating system
@@ -477,14 +477,11 @@ Package: catchfile 2019/12/09 v1.8 Catch the contents of a file (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifluatex.sty
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 )
-runsystem(uname -s > "Pohlmann_NE515_finalReport.w18")...executed.
 
+Package ifplatform Warning: 
+    shell escape is disabled, so I can only detect \ifwindows.
 
-(./Pohlmann_NE515_finalReport.w18)
-runsystem(rm -- "Pohlmann_NE515_finalReport.w18")...executed.
-
-)
-(/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.sty
+) (/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.sty
 (/usr/share/texlive/texmf-dist/tex/generic/xstring/xstring.tex
 \integerpart=\count313
 \decimalpart=\count314
@@ -507,8 +504,21 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \@float@every@listing=\toks28
 \c@listing=\count317
 )
-runsystem(mkdir -p _minted-Pohlmann_NE515_finalReport)...executed.
+runsystem(mkdir -p _minted-Pohlmann_NE515_finalReport)...disabled (restricted).
 
+
+
+./NE515.cls:25: Package minted Error: You must invoke LaTeX with the -shell-esc
+ape flag.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.25 \RequirePackage
+                    {authblk}
+Pass the -shell-escape flag to LaTeX. Refer to the minted.sty documentation for
+ more information.
 
 (/usr/share/texlive/texmf-dist/tex/latex/preprint/authblk.sty
 Package: authblk 2001/02/27 1.3 (PWD)
@@ -634,33 +644,46 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisrulewidth=\dimen268
 )
 \c@definition=\count330
-runsystem(which pygmentize && touch Pohlmann_NE515_finalReport.aex)...executed.
+runsystem(which pygmentize && touch Pohlmann_NE515_finalReport.aex)...disabled 
+(restricted).
 
-runsystem(rm Pohlmann_NE515_finalReport.aex)...executed.
 
 
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.aux)
+./Pohlmann_NE515_finalReport.tex:24: Package minted Error: You must have `pygme
+ntize' installed to use this package.
+
+See the minted package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.24 \begin{document}
+                     
+Refer to the installation instructions in the minted documentation for more inf
+ormation.
+
+
+(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/Pohlmann_NE515_finalReport.a
+ux)
 \openout1 = `Pohlmann_NE515_finalReport.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 24.
+LaTeX Font Info:    ... okay on input line 24.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -678,7 +701,7 @@ LaTeX Font Info:    ... okay on input line 18.
 * \textheight=650.43001pt
 * \oddsidemargin=0.0pt
 * \evensidemargin=0.0pt
-* \topmargin=-37.0pt
+* \topmargin=-39.5pt
 * \headheight=20.0pt
 * \headsep=25.0pt
 * \topskip=12.0pt
@@ -696,25 +719,25 @@ LaTeX Font Info:    ... okay on input line 18.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 18.
-Package microtype Info: Applying patch `item' on input line 18.
-Package microtype Info: Applying patch `toc' on input line 18.
-Package microtype Info: Applying patch `eqnum' on input line 18.
-Package microtype Info: Applying patch `footnote' on input line 18.
+LaTeX Info: Redefining \microtypecontext on input line 24.
+Package microtype Info: Applying patch `item' on input line 24.
+Package microtype Info: Applying patch `toc' on input line 24.
+Package microtype Info: Applying patch `eqnum' on input line 24.
+Package microtype Info: Applying patch `footnote' on input line 24.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 18.
+LaTeX Info: Redefining \showhyphens on input line 24.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-ppl.cfg
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
-Package hyperref Info: Link coloring ON on input line 18.
+Package hyperref Info: Link coloring ON on input line 24.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -727,14 +750,14 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count331
 )
-LaTeX Info: Redefining \ref on input line 18.
-LaTeX Info: Redefining \pageref on input line 18.
-LaTeX Info: Redefining \nameref on input line 18.
+LaTeX Info: Redefining \ref on input line 24.
+LaTeX Info: Redefining \pageref on input line 24.
+LaTeX Info: Redefining \nameref on input line 24.
 
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.out)
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.out)
+(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/Pohlmann_NE515_finalReport.o
+ut)
+(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/Pohlmann_NE515_finalReport.o
+ut)
 \@outlinefile=\write5
 \openout5 = `Pohlmann_NE515_finalReport.out'.
 
@@ -767,7 +790,7 @@ Package caption Info: End \AtBeginDocument code.
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 19.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 25.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -776,7 +799,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 19.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 25.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -787,315 +810,352 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.toc)
+(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/Pohlmann_NE515_finalReport.t
+oc)
 \tf@toc=\write6
 \openout6 = `Pohlmann_NE515_finalReport.toc'.
 
 
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.lof)
+(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/Pohlmann_NE515_finalReport.l
+of)
 \tf@lof=\write7
 \openout7 = `Pohlmann_NE515_finalReport.lof'.
 
+Package microtype Info: Character `029' is missing
+(microtype)             in font `T1/qpl/m/sc/12'.
+(microtype)             Ignoring protrusion settings for this character.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.22     \clearpage
-                    [1]
-LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 2
-6.
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+l.28     \clearpage
+                    [1] [2
+
+]
+
+LaTeX Warning: Citation `gezerlisNumericalMethodsPhysicsa' on page 3 undefined 
+on input line 62.
+
+
+LaTeX Warning: Citation `LegendrePolynomials2024' on page 3 undefined on input 
+line 67.
+
+
+LaTeX Warning: Citation `gezerlisNumericalMethodsPhysicsa' on page 3 undefined 
+on input line 77.
+
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 8
+2.
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [2
+ [3] [4] [5]
 
-] [3] [4] [5]
-<../SN1_validation/plots/MMS_plot.png, id=168, 462.528pt x 346.896pt>
+LaTeX Warning: Citation `gezerlisNumericalMethodsPhysicsa' on page 6 undefined 
+on input line 197.
+
+<../SN1_validation/plots/MMS_plot.png, id=160, 462.528pt x 346.896pt>
 File: ../SN1_validation/plots/MMS_plot.png Graphic file (type png)
 <use ../SN1_validation/plots/MMS_plot.png>
 Package pdftex.def Info: ../SN1_validation/plots/MMS_plot.png  used on input li
-ne 204.
+ne 209.
 (pdftex.def)             Requested size: 375.80544pt x 281.86818pt.
-<../SN1_validation/plots/L2error_plot.png, id=170, 462.528pt x 346.896pt>
+<../SN1_validation/plots/L2error_plot.png, id=162, 462.528pt x 346.896pt>
 File: ../SN1_validation/plots/L2error_plot.png Graphic file (type png)
 <use ../SN1_validation/plots/L2error_plot.png>
 Package pdftex.def Info: ../SN1_validation/plots/L2error_plot.png  used on inpu
-t line 211.
+t line 216.
 (pdftex.def)             Requested size: 375.80544pt x 281.86818pt.
- [6]
+[6]
 
 LaTeX Warning: Text page 7 contains only floats.
 
-[7 <../SN1_validation/plots/MMS_plot.png> <../SN1_validation/plots/L2error_plot
-.png>]
+[7 </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN1_validation/plots/M
+MS_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN1_validati
+on/plots/L2error_plot.png>]
 LaTeX Font Info:    Trying to load font information for TS1+qpl on input line 2
-24.
+29.
  (/usr/share/texmf/tex/latex/tex-gyre/ts1qpl.fd
 File: ts1qpl.fd 2009/09/25 v1.2 font definition file for TS1/qpl
-) [8
+)
+[8
 
 ]
-<../SN_Cases/plots/10_case1_out_plot.png, id=192, 462.528pt x 346.896pt>
+<../SN_Cases/plots/10_case1_out_plot.png, id=185, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/10_case1_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/10_case1_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/10_case1_out_plot.png  used on input
- line 246.
+ line 251.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/20_case1_out_plot.png, id=193, 462.528pt x 346.896pt>
+<../SN_Cases/plots/20_case1_out_plot.png, id=186, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/20_case1_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/20_case1_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/20_case1_out_plot.png  used on input
- line 252.
+ line 257.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/50_case1_out_plot.png, id=194, 462.528pt x 346.896pt>
+<../SN_Cases/plots/50_case1_out_plot.png, id=187, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/50_case1_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/50_case1_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/50_case1_out_plot.png  used on input
- line 258.
+ line 263.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/100_case1_out_plot.png, id=195, 462.528pt x 346.896pt>
+<../SN_Cases/plots/100_case1_out_plot.png, id=188, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/100_case1_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/100_case1_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/100_case1_out_plot.png  used on inpu
-t line 264.
+t line 269.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/10_case2_out_plot.png, id=196, 462.528pt x 346.896pt>
+<../SN_Cases/plots/10_case2_out_plot.png, id=189, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/10_case2_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/10_case2_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/10_case2_out_plot.png  used on input
- line 276.
+ line 281.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/20_case2_out_plot.png, id=197, 462.528pt x 346.896pt>
+<../SN_Cases/plots/20_case2_out_plot.png, id=190, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/20_case2_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/20_case2_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/20_case2_out_plot.png  used on input
- line 282.
+ line 287.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/50_case2_out_plot.png, id=198, 462.528pt x 346.896pt>
+<../SN_Cases/plots/50_case2_out_plot.png, id=191, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/50_case2_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/50_case2_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/50_case2_out_plot.png  used on input
- line 288.
+ line 293.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/100_case2_out_plot.png, id=199, 462.528pt x 346.896pt>
+<../SN_Cases/plots/100_case2_out_plot.png, id=192, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/100_case2_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/100_case2_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/100_case2_out_plot.png  used on inpu
-t line 294.
+t line 299.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
  [9
 
- <../SN_Cases/plots/10_case1_out_plot.png> <../SN_Cases/plots/20_case1_out_plot
-.png> <../SN_Cases/plots/50_case1_out_plot.png> <../SN_Cases/plots/100_case1_ou
-t_plot.png>]
-[10 <../SN_Cases/plots/10_case2_out_plot.png> <../SN_Cases/plots/20_case2_out_p
-lot.png> <../SN_Cases/plots/50_case2_out_plot.png> <../SN_Cases/plots/100_case2
-_out_plot.png>]
-<../SN_Cases/plots/10_case3_step_out_plot.png, id=218, 462.528pt x 346.896pt>
+ </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/10_case1_
+out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/pl
+ots/20_case1_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/.
+./SN_Cases/plots/50_case1_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_
+SNCodes/out/../SN_Cases/plots/100_case1_out_plot.png>] [10 </home/lipohlmann/De
+sktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/10_case2_out_plot.png> </home/
+lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/20_case2_out_plot
+.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/50_c
+ase2_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cas
+es/plots/100_case2_out_plot.png>]
+<../SN_Cases/plots/10_case3_step_out_plot.png, id=211, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/10_case3_step_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/10_case3_step_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/10_case3_step_out_plot.png  used on 
-input line 318.
+input line 323.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/20_case3_step_out_plot.png, id=219, 462.528pt x 346.896pt>
+<../SN_Cases/plots/20_case3_step_out_plot.png, id=212, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/20_case3_step_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/20_case3_step_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/20_case3_step_out_plot.png  used on 
-input line 324.
+input line 329.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/50_case3_step_out_plot.png, id=220, 462.528pt x 346.896pt>
+<../SN_Cases/plots/50_case3_step_out_plot.png, id=213, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/50_case3_step_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/50_case3_step_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/50_case3_step_out_plot.png  used on 
-input line 330.
+input line 335.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/100_case3_step_out_plot.png, id=221, 462.528pt x 346.896pt>
+<../SN_Cases/plots/100_case3_step_out_plot.png, id=214, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/100_case3_step_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/100_case3_step_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/100_case3_step_out_plot.png  used on
- input line 336.
+ input line 341.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/10_case3_diamond_out_plot.png, id=222, 462.528pt x 346.896pt
+<../SN_Cases/plots/10_case3_diamond_out_plot.png, id=215, 462.528pt x 346.896pt
 >
 File: ../SN_Cases/plots/10_case3_diamond_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/10_case3_diamond_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/10_case3_diamond_out_plot.png  used 
-on input line 349.
+on input line 354.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/20_case3_diamond_out_plot.png, id=223, 462.528pt x 346.896pt
+<../SN_Cases/plots/20_case3_diamond_out_plot.png, id=216, 462.528pt x 346.896pt
 >
 File: ../SN_Cases/plots/20_case3_diamond_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/20_case3_diamond_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/20_case3_diamond_out_plot.png  used 
-on input line 355.
+on input line 360.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/50_case3_diamond_out_plot.png, id=224, 462.528pt x 346.896pt
+<../SN_Cases/plots/50_case3_diamond_out_plot.png, id=217, 462.528pt x 346.896pt
 >
 File: ../SN_Cases/plots/50_case3_diamond_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/50_case3_diamond_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/50_case3_diamond_out_plot.png  used 
-on input line 361.
+on input line 366.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/100_case3_diamond_out_plot.png, id=225, 462.528pt x 346.896p
+<../SN_Cases/plots/100_case3_diamond_out_plot.png, id=218, 462.528pt x 346.896p
 t>
 File: ../SN_Cases/plots/100_case3_diamond_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/100_case3_diamond_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/100_case3_diamond_out_plot.png  used
- on input line 367.
+ on input line 372.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
  [11
 
- <../SN_Cases/plots/10_case3_step_out_plot.png> <../SN_Cases/plots/20_case3_ste
-p_out_plot.png> <../SN_Cases/plots/50_case3_step_out_plot.png> <../SN_Cases/plo
-ts/100_case3_step_out_plot.png>] [12 <../SN_Cases/plots/10_case3_diamond_out_pl
-ot.png> <../SN_Cases/plots/20_case3_diamond_out_plot.png> <../SN_Cases/plots/50
-_case3_diamond_out_plot.png> <../SN_Cases/plots/100_case3_diamond_out_plot.png>
-]
-<../SN_Cases/plots/100_case4_out_plot.png, id=243, 462.528pt x 346.896pt>
+ </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/10_case3_
+step_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cas
+es/plots/20_case3_step_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNC
+odes/out/../SN_Cases/plots/50_case3_step_out_plot.png> </home/lipohlmann/Deskto
+p/NE_515/NE515_SNCodes/out/../SN_Cases/plots/100_case3_step_out_plot.png>] [12 
+</home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/10_case3_d
+iamond_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_C
+ases/plots/20_case3_diamond_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE51
+5_SNCodes/out/../SN_Cases/plots/50_case3_diamond_out_plot.png> </home/lipohlman
+n/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/100_case3_diamond_out_plot
+.png>]
+<../SN_Cases/plots/100_case4_out_plot.png, id=236, 462.528pt x 346.896pt>
 File: ../SN_Cases/plots/100_case4_out_plot.png Graphic file (type png)
 <use ../SN_Cases/plots/100_case4_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/100_case4_out_plot.png  used on inpu
-t line 389.
+t line 394.
 (pdftex.def)             Requested size: 375.80544pt x 281.86818pt.
  [13
 
- <../SN_Cases/plots/100_case4_out_plot.png>]
-<../SN_Cases/plots/20_case5_albedo-0.5_out_plot.png, id=249, 462.528pt x 346.89
+ </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/100_case4
+_out_plot.png>]
+<../SN_Cases/plots/20_case5_albedo-0.5_out_plot.png, id=242, 462.528pt x 346.89
 6pt>
 File: ../SN_Cases/plots/20_case5_albedo-0.5_out_plot.png Graphic file (type png
 )
 <use ../SN_Cases/plots/20_case5_albedo-0.5_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/20_case5_albedo-0.5_out_plot.png  us
-ed on input line 409.
+ed on input line 414.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/20_case5_albedo-1.0_out_plot.png, id=250, 462.528pt x 346.89
+<../SN_Cases/plots/20_case5_albedo-1.0_out_plot.png, id=243, 462.528pt x 346.89
 6pt>
 File: ../SN_Cases/plots/20_case5_albedo-1.0_out_plot.png Graphic file (type png
 )
 <use ../SN_Cases/plots/20_case5_albedo-1.0_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/20_case5_albedo-1.0_out_plot.png  us
-ed on input line 415.
+ed on input line 420.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/100_case5_albedo-0.5_out_plot.png, id=251, 462.528pt x 346.8
+<../SN_Cases/plots/100_case5_albedo-0.5_out_plot.png, id=244, 462.528pt x 346.8
 96pt>
 File: ../SN_Cases/plots/100_case5_albedo-0.5_out_plot.png Graphic file (type pn
 g)
 <use ../SN_Cases/plots/100_case5_albedo-0.5_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/100_case5_albedo-0.5_out_plot.png  u
-sed on input line 421.
+sed on input line 426.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN_Cases/plots/100_case5_albedo-1.0_out_plot.png, id=252, 462.528pt x 346.8
+<../SN_Cases/plots/100_case5_albedo-1.0_out_plot.png, id=245, 462.528pt x 346.8
 96pt>
 File: ../SN_Cases/plots/100_case5_albedo-1.0_out_plot.png Graphic file (type pn
 g)
 <use ../SN_Cases/plots/100_case5_albedo-1.0_out_plot.png>
 Package pdftex.def Info: ../SN_Cases/plots/100_case5_albedo-1.0_out_plot.png  u
-sed on input line 427.
+sed on input line 432.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
  [14
 
- <../SN_Cases/plots/20_case5_albedo-0.5_out_plot.png> <../SN_Cases/plots/20_cas
-e5_albedo-1.0_out_plot.png> <../SN_Cases/plots/100_case5_albedo-0.5_out_plot.pn
-g> <../SN_Cases/plots/100_case5_albedo-1.0_out_plot.png>]
-<../SN2/plots/freeSurface1_alpha0_input_out.csv.png, id=261, 462.528pt x 346.89
+ </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/20_case5_
+albedo-0.5_out_plot.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../
+SN_Cases/plots/20_case5_albedo-1.0_out_plot.png> </home/lipohlmann/Desktop/NE_5
+15/NE515_SNCodes/out/../SN_Cases/plots/100_case5_albedo-0.5_out_plot.png> </hom
+e/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN_Cases/plots/100_case5_albed
+o-1.0_out_plot.png>]
+<../SN2/plots/freeSurface1_alpha0_input_out.csv.png, id=254, 462.528pt x 346.89
 6pt>
 File: ../SN2/plots/freeSurface1_alpha0_input_out.csv.png Graphic file (type png
 )
 <use ../SN2/plots/freeSurface1_alpha0_input_out.csv.png>
 Package pdftex.def Info: ../SN2/plots/freeSurface1_alpha0_input_out.csv.png  us
-ed on input line 450.
+ed on input line 455.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN2/plots/freeSurface1_diamond_input_out.csv.png, id=262, 462.528pt x 346.8
+<../SN2/plots/freeSurface1_diamond_input_out.csv.png, id=255, 462.528pt x 346.8
 96pt>
 File: ../SN2/plots/freeSurface1_diamond_input_out.csv.png Graphic file (type pn
 g)
 <use ../SN2/plots/freeSurface1_diamond_input_out.csv.png>
 Package pdftex.def Info: ../SN2/plots/freeSurface1_diamond_input_out.csv.png  u
-sed on input line 456.
+sed on input line 461.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN2/plots/freeSurface2_alpha0_input_out.csv.png, id=263, 462.528pt x 346.89
+<../SN2/plots/freeSurface2_alpha0_input_out.csv.png, id=256, 462.528pt x 346.89
 6pt>
 File: ../SN2/plots/freeSurface2_alpha0_input_out.csv.png Graphic file (type png
 )
 <use ../SN2/plots/freeSurface2_alpha0_input_out.csv.png>
 Package pdftex.def Info: ../SN2/plots/freeSurface2_alpha0_input_out.csv.png  us
-ed on input line 462.
+ed on input line 467.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
-<../SN2/plots/freeSurface2_diamond_input_out.csv.png, id=264, 462.528pt x 346.8
+<../SN2/plots/freeSurface2_diamond_input_out.csv.png, id=257, 462.528pt x 346.8
 96pt>
 File: ../SN2/plots/freeSurface2_diamond_input_out.csv.png Graphic file (type pn
 g)
 <use ../SN2/plots/freeSurface2_diamond_input_out.csv.png>
 Package pdftex.def Info: ../SN2/plots/freeSurface2_diamond_input_out.csv.png  u
-sed on input line 468.
+sed on input line 473.
 (pdftex.def)             Requested size: 211.38832pt x 158.54192pt.
  [15
 
- <../SN2/plots/freeSurface1_alpha0_input_out.csv.png> <../SN2/plots/freeSurface
-1_diamond_input_out.csv.png> <../SN2/plots/freeSurface2_alpha0_input_out.csv.pn
-g> <../SN2/plots/freeSurface2_diamond_input_out.csv.png>]
-<../SN2/plots/reed_out.csv.png, id=276, 462.528pt x 346.896pt>
+ </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN2/plots/freeSurface1_a
+lpha0_input_out.csv.png> </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../
+SN2/plots/freeSurface1_diamond_input_out.csv.png> </home/lipohlmann/Desktop/NE_
+515/NE515_SNCodes/out/../SN2/plots/freeSurface2_alpha0_input_out.csv.png> </hom
+e/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN2/plots/freeSurface2_diamond
+_input_out.csv.png>]
+<../SN2/plots/reed_out.csv.png, id=269, 462.528pt x 346.896pt>
 File: ../SN2/plots/reed_out.csv.png Graphic file (type png)
 <use ../SN2/plots/reed_out.csv.png>
-Package pdftex.def Info: ../SN2/plots/reed_out.csv.png  used on input line 507.
+Package pdftex.def Info: ../SN2/plots/reed_out.csv.png  used on input line 512.
 
 (pdftex.def)             Requested size: 422.77664pt x 317.09972pt.
  [16
 
-] [17 <../SN2/plots/reed_out.csv.png>]
+] [17 </home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/../SN2/plots/reed_out.
+csv.png>]
 (./_minted-Pohlmann_NE515_finalReport/default.pygstyle)
 (./_minted-Pohlmann_NE515_finalReport/BE6B88CF8525287CE3234FCD45E11D968449C92CD
-92A3EE92AEDE8ADC6067C6E.pygtex)
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.bbl [18
+92A3EE92AEDE8ADC6067C6E.pygtex) (./Pohlmann_NE515_finalReport.bbl) [18
 
-]) [19]
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.aux)
+]
+(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/Pohlmann_NE515_finalReport.a
+ux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `Pohlmann_NE515_finalReport.out' has not chan
 ged.
 (rerunfilecheck)             Checksum: AF32C425080AD9057E7D971B206E2367;1513.
  ) 
 Here is how much of TeX's memory you used:
- 21390 strings out of 478287
- 382375 string characters out of 5849288
- 735662 words of memory out of 5000000
- 39016 multiletter control sequences out of 15000+600000
- 537122 words of font info for 162 fonts, out of 8000000 for 9000
+ 21389 strings out of 478287
+ 382013 string characters out of 5849288
+ 735595 words of memory out of 5000000
+ 39014 multiletter control sequences out of 15000+600000
+ 540807 words of font info for 166 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  90i,15n,95p,1023b,612s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/
 fonts/enc/dvips/tex-gyre/q-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q
--ec.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8
-.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qplb.pfb></usr/share/texmf/f
-onts/type1/public/tex-gyre/qplbi.pfb></usr/share/texmf/fonts/type1/public/tex-g
-yre/qplr.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qplri.pfb></usr/shar
-e/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf/fonts/type1/
-public/cm-super/sftt1200.pfb>
-Output written on /home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohl
-mann_NE515_finalReport.pdf (20 pages, 2745500 bytes).
+-ec.enc}{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-ec-sc.enc}</usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf/f
+onts/type1/public/tex-gyre/qplb.pfb></usr/share/texmf/fonts/type1/public/tex-gy
+re/qplbi.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qplr.pfb></usr/share
+/texmf/fonts/type1/public/tex-gyre/qplri.pfb></usr/share/texmf/fonts/type1/publ
+ic/cm-super/sftt1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200
+.pfb>
+Output written on /home/lipohlmann/Desktop/NE_515/NE515_SNCodes/out/Pohlmann_NE
+515_finalReport.pdf (19 pages, 2739730 bytes).
 PDF statistics:
- 395 PDF objects out of 1000 (max. 8388607)
- 277 compressed objects within 3 object streams
- 72 named destinations out of 1000 (max. 500000)
- 41189 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 387 PDF objects out of 1000 (max. 8388607)
+ 269 compressed objects within 3 object streams
+ 69 named destinations out of 1000 (max. 500000)
+ 43237 words of extra memory for PDF output out of 51595 (max. 10000000)
 

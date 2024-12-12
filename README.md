@@ -1,5 +1,6 @@
 # NE515_SNCodes
 Contains code developed for NE515: Radiation Interaction and Transport offered at the University of New Mexico in Fall 2024.
+The course was taught by Dr. Anil Prinja, Distinguished Professor Emeritus.
 
 ## Codes
 The codes written were prepared to submit for the class mentioned.
