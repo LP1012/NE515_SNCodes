@@ -191,7 +191,7 @@ NE515: Radiation Interaction and Transport}
     \Cref{manufactured source} requires the use of numerical integration again, and to maintain the quadratic convergence from the diamond differencing, a second-order numerical quadrature scheme must also be implemented.
     One of the simplest choices is the Trapezoid Rule~\cite{gezerlisNumericalMethodsPhysicsa}, which when applied to \cref{manufactured source} gives:
     \begin{equation}
-        S_{n,i}\approx\frac{1}{2}\left( Q^m(\mu_n,z_{i+\nicefrac{1}{2}})+Q^m(\mu_n,z_{i-\nicefrac{1}{2}} \right)
+        S_{n,i}\approx\frac{1}{2}\left( Q^m(\mu_n,z_{i+\nicefrac{1}{2}})+Q^m(\mu_n,z_{i-\nicefrac{1}{2}})\right)
     \end{equation}
 
     When implemented over various number of cells, the numerical solution converged near-quadratically to the manufactured solution.

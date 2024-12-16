@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.11.11)  12 DEC 2024 16:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.11.11)  16 DEC 2024 16:38
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -639,8 +639,8 @@ runsystem(which pygmentize && touch Pohlmann_NE515_finalReport.aex)...executed.
 runsystem(rm Pohlmann_NE515_finalReport.aex)...executed.
 
 
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.aux)
+(/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515/NE515_SNCodes/rep
+ort/out/Pohlmann_NE515_finalReport.aux)
 \openout1 = `Pohlmann_NE515_finalReport.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
@@ -731,14 +731,15 @@ LaTeX Info: Redefining \ref on input line 18.
 LaTeX Info: Redefining \pageref on input line 18.
 LaTeX Info: Redefining \nameref on input line 18.
 
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.out)
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.out)
+(/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515/NE515_SNCodes/rep
+ort/out/Pohlmann_NE515_finalReport.out)
+(/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515/NE515_SNCodes/rep
+ort/out/Pohlmann_NE515_finalReport.out)
 \@outlinefile=\write5
 \openout5 = `Pohlmann_NE515_finalReport.out'.
 
- (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count332
 \scratchdimen=\dimen269
@@ -787,14 +788,14 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.toc)
+(/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515/NE515_SNCodes/rep
+ort/out/Pohlmann_NE515_finalReport.toc)
 \tf@toc=\write6
 \openout6 = `Pohlmann_NE515_finalReport.toc'.
 
 
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.lof)
+(/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515/NE515_SNCodes/rep
+ort/out/Pohlmann_NE515_finalReport.lof)
 \tf@lof=\write7
 \openout7 = `Pohlmann_NE515_finalReport.lof'.
 
@@ -1052,22 +1053,19 @@ Package pdftex.def Info: ../SN2/plots/reed_out.csv.png  used on input line 507.
 (./_minted-Pohlmann_NE515_finalReport/default.pygstyle)
 (./_minted-Pohlmann_NE515_finalReport/BE6B88CF8525287CE3234FCD45E11D968449C92CD
 92A3EE92AEDE8ADC6067C6E.pygtex)
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.bbl [18
+(/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515/NE515_SNCodes/rep
+ort/out/Pohlmann_NE515_finalReport.bbl [18
 
 ]) [19]
-(/home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohlmann_NE515_finalR
-eport.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+(/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515/NE515_SNCodes/rep
+ort/out/Pohlmann_NE515_finalReport.aux)
 Package rerunfilecheck Info: File `Pohlmann_NE515_finalReport.out' has not chan
 ged.
 (rerunfilecheck)             Checksum: AF32C425080AD9057E7D971B206E2367;1513.
  ) 
 Here is how much of TeX's memory you used:
  21390 strings out of 478287
- 382375 string characters out of 5849288
+ 382870 string characters out of 5849288
  735662 words of memory out of 5000000
  39016 multiletter control sequences out of 15000+600000
  537122 words of font info for 162 fonts, out of 8000000 for 9000
@@ -1091,8 +1089,9 @@ onts/type1/public/tex-gyre/qplbi.pfb></usr/share/texmf/fonts/type1/public/tex-g
 yre/qplr.pfb></usr/share/texmf/fonts/type1/public/tex-gyre/qplri.pfb></usr/shar
 e/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share/texmf/fonts/type1/
 public/cm-super/sftt1200.pfb>
-Output written on /home/lipohlmann/Desktop/NE_515/NE515_SNCodes/report/out/Pohl
-mann_NE515_finalReport.pdf (20 pages, 2745500 bytes).
+Output written on "/home/lipohlmann/Desktop/Previous Semesters/Fall 2024/NE_515
+/NE515_SNCodes/report/out/Pohlmann_NE515_finalReport.pdf" (20 pages, 2745504 by
+tes).
 PDF statistics:
  395 PDF objects out of 1000 (max. 8388607)
  277 compressed objects within 3 object streams
